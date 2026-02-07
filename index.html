@@ -81,6 +81,7 @@
             animation: bounce 1.2s infinite ease-in-out;
             user-select: none;
             cursor: pointer;
+            z-index: 10;
         }
 
         @keyframes bounce {
@@ -106,6 +107,7 @@
             left: 50%;
             transform: translateX(-50%);
             box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            z-index: 10;
         }
 
         @keyframes rainbowMove {
@@ -122,6 +124,7 @@
             border-radius: 50%;
             pointer-events: none;
             animation: fireworkPop 700ms ease-out forwards;
+            z-index: 20;
         }
 
         @keyframes fireworkPop {
@@ -129,9 +132,65 @@
             80% { transform: scale(1.5); opacity: 1; }
             100% { transform: scale(0.2); opacity: 0; }
         }
+
+        /* ⭐ Mini Roblox Mode Button */
+        #miniGameBtn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: #00ccff;
+            color: black;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 0 10px #00ccff;
+        }
+
+        /* ⭐ Fullscreen game mode */
+        #gameMode {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #00ff00;
+            overflow: hidden;
+            z-index: 9998;
+        }
+
+        /* Blocky Roblox character */
+        .blockDude {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+        }
+
+        .blockHead {
+            width: 40px;
+            height: 40px;
+            background: #ffcc99;
+        }
+
+        .blockTorso {
+            width: 40px;
+            height: 40px;
+            background: #0066ff;
+        }
+
+        .blockSword {
+            position: absolute;
+            width: 8px;
+            height: 30px;
+            background: silver;
+            right: -10px;
+            top: 20px;
+        }
     </style>
 </head>
 <body>
+
+    <button id="miniGameBtn">Mini Roblox Mode</button>
+    <div id="gameMode"></div>
 
     <h1>🧶 YARN 🧶</h1>
 
@@ -156,10 +215,8 @@
         © Yarn — All rights reserved.
     </footer>
 
-    <!-- Bouncing Yarn Emoji -->
     <div class="bouncy-yarn" id="yarnEmoji">🧶</div>
 
-    <!-- Monster Blast Button -->
     <button id="monsterBlastBtn" onclick="window.location.href='https://www.roblox.com/games/7313347582/MONSTER-BLAST'">
         MONSTER BLAST
     </button>
@@ -180,7 +237,6 @@
                 fw.className = "firework";
                 fw.style.background = colors[Math.floor(Math.random() * colors.length)];
 
-                // Random explosion position above the button
                 let x = (window.innerWidth / 2) + (Math.random() * 120 - 60);
                 let y = window.innerHeight - 120 + (Math.random() * 40 - 20);
 
@@ -193,14 +249,71 @@
             }
         }
 
-        // Transform yarn → Monster Blast button + fireworks
         document.getElementById("yarnEmoji").onclick = function() {
             this.style.display = "none";
             document.getElementById("monsterBlastBtn").style.display = "block";
-
-            // Fireworks!
             spawnFireworks();
         };
+
+        /* ⭐ Mini Roblox Mode */
+        const gameMode = document.getElementById("gameMode");
+        const miniBtn = document.getElementById("miniGameBtn");
+
+        miniBtn.onclick = () => {
+            document.body.children[1].style.display = "none";
+            gameMode.style.display = "block";
+            spawnNPCs(12);
+        };
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+                gameMode.style.display = "none";
+                document.body.children[1].style.display = "block";
+                gameMode.innerHTML = "";
+            }
+        });
+
+        function spawnNPCs(count) {
+            for (let i = 0; i < count; i++) {
+                createBlockDude();
+            }
+        }
+
+        function createBlockDude() {
+            const dude = document.createElement("div");
+            dude.className = "blockDude";
+
+            dude.style.left = Math.random() * window.innerWidth + "px";
+            dude.style.top = Math.random() * window.innerHeight + "px";
+
+            const head = document.createElement("div");
+            head.className = "blockHead";
+
+            const torso = document.createElement("div");
+            torso.className = "blockTorso";
+
+            const sword = document.createElement("div");
+            sword.className = "blockSword";
+
+            dude.appendChild(head);
+            dude.appendChild(torso);
+            dude.appendChild(sword);
+
+            gameMode.appendChild(dude);
+
+            wander(dude);
+        }
+
+        function wander(dude) {
+            setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+
+                dude.style.transition = "1.5s linear";
+                dude.style.left = x + "px";
+                dude.style.top = y + "px";
+            }, 1500);
+        }
     </script>
 
 </body>
