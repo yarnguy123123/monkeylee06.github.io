@@ -113,6 +113,22 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+
+        /* Firework particle */
+        .firework {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fireworkPop 700ms ease-out forwards;
+        }
+
+        @keyframes fireworkPop {
+            0% { transform: scale(0.2); opacity: 1; }
+            80% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(0.2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -155,10 +171,35 @@
             }, 300);
         }
 
-        // Transform yarn → Monster Blast button
+        /* Firework spawner */
+        function spawnFireworks() {
+            const colors = ["#ff0000", "#00ffea", "#ff00ff", "#ffff00", "#00ff00", "#ff8800"];
+
+            for (let i = 0; i < 12; i++) {
+                let fw = document.createElement("div");
+                fw.className = "firework";
+                fw.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                // Random explosion position above the button
+                let x = (window.innerWidth / 2) + (Math.random() * 120 - 60);
+                let y = window.innerHeight - 120 + (Math.random() * 40 - 20);
+
+                fw.style.left = x + "px";
+                fw.style.top = y + "px";
+
+                document.body.appendChild(fw);
+
+                setTimeout(() => fw.remove(), 700);
+            }
+        }
+
+        // Transform yarn → Monster Blast button + fireworks
         document.getElementById("yarnEmoji").onclick = function() {
-            this.style.display = "none"; // hide yarn
-            document.getElementById("monsterBlastBtn").style.display = "block"; // show button
+            this.style.display = "none";
+            document.getElementById("monsterBlastBtn").style.display = "block";
+
+            // Fireworks!
+            spawnFireworks();
         };
     </script>
 
