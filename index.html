@@ -1,96 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>YARNGAMESFORYOU.com</title>
-
-    <!-- Favicon (works once hosted online) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🧶</text></svg>">
-
+    <title>YARN</title>
     <style>
         body {
-            font-family: Arial;
-            background: #111827;
+            background-color: #111;
             color: white;
+            font-family: Arial, sans-serif;
             text-align: center;
-            padding-top: 40px;
-        }
-
-        .fake-url {
-            font-size: 14px;
-            opacity: 0.6;
-            margin-bottom: 10px;
-        }
-
-        .yarn-emoji {
-            font-size: 60px;
-            margin-bottom: 10px;
+            margin: 0;
+            padding: 0;
         }
 
         h1 {
-            margin-bottom: 20px;
-            font-size: 40px;
-            letter-spacing: 2px;
+            margin-top: 40px;
+            font-size: 60px;
         }
 
-        .link-button {
-            display: block;
-            width: 260px;
-            margin: 20px auto 10px auto;
-            padding: 14px;
-            background: #4f46e5;
+        .button {
+            background-color: #7a00ff;
             color: white;
-            text-decoration: none;
-            border-radius: 999px;
-            font-size: 18px;
-            transition: 0.15s;
+            padding: 15px 30px;
+            margin: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.2s;
         }
 
-        .link-button:hover {
-            background: #6366f1;
-            transform: translateY(-2px);
+        .button:hover {
+            background-color: #9b33ff;
         }
 
-        .coming-soon {
-            margin-top: 5px;
-            font-size: 14px;
-            opacity: 0.7;
+        /* Shine effect */
+        .spark {
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background: rgba(255,255,255,0.6);
+            top: -10%;
+            left: -120%;
+            transform: skewX(-20deg);
+            filter: blur(10px);
+            transition: 0.4s;
         }
 
-        .copyright {
-            margin-top: 80px;
-            font-size: 12px;
-            opacity: 0.5;
+        .button:active .spark {
+            left: 120%;
+        }
+
+        footer {
+            margin-top: 50px;
+            color: #888;
+        }
+
+        /* Bouncing Yarn Emoji */
+        .bouncy-yarn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 50px;
+            animation: bounce 1.2s infinite ease-in-out;
+            user-select: none;
+        }
+
+        @keyframes bounce {
+            0%   { transform: translateX(-50%) translateY(0); }
+            50%  { transform: translateX(-50%) translateY(-25px); }
+            100% { transform: translateX(-50%) translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="fake-url">www.YARNGAMESFORYOU.com</div>
+    <h1>🧶 YARN 🧶</h1>
 
-    <div class="yarn-emoji">🧶</div>
-
-    <h1>YARN</h1>
-
-    <!-- Roblox Profile Button -->
-    <a class="link-button" href="https://www.roblox.com/users/897945411/profile" target="_blank">
+    <button class="button" onclick="shineAndGo('https://www.roblox.com/users/897945411/profile')">
         My Roblox Profile
-    </a>
+        <div class="spark"></div>
+    </button>
 
-    <!-- Anomaly Night Button -->
-    <a class="link-button" href="https://www.roblox.com/games/76938252895073/THE-ANOMALY-NIGHT" target="_blank">
+    <button class="button" onclick="shineAndGo('https://www.roblox.com/games/76938252895073/THE-ANOMALY-NIGHT')">
         Anomaly Night
-    </a>
+        <div class="spark"></div>
+    </button>
 
-    <!-- Speeding Brainrot Wall Button -->
-    <a class="link-button" href="https://www.roblox.com/games/85488226664354/THE-SPEEDING-BRAINROT-WALL" target="_blank">
+    <button class="button" onclick="shineAndGo('https://www.roblox.com/games/85488226664354/THE-SPEEDING-BRAINROT-WALL')">
         Speeding Brainrot Wall
-    </a>
+        <div class="spark"></div>
+    </button>
 
-    <div class="coming-soon">More coming soon</div>
+    <p>More coming soon</p>
 
-    <div class="copyright">
-        © Yarn — All rights reserved
-    </div>
+    <footer>
+        © Yarn — All rights reserved.
+    </footer>
+
+    <!-- Bouncing Yarn Emoji -->
+    <div class="bouncy-yarn">🧶</div>
+
+    <script>
+        function shineAndGo(url) {
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+    </script>
 
 </body>
 </html>
