@@ -90,32 +90,6 @@
             100% { transform: translateX(-50%) translateY(0); }
         }
 
-        /* 🌈 Monster Blast Button */
-        #monsterBlastBtn {
-            display: none;
-            background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, purple);
-            background-size: 400% 400%;
-            animation: rainbowMove 4s linear infinite;
-            color: white;
-            padding: 18px 40px;
-            border: none;
-            border-radius: 12px;
-            font-size: 24px;
-            cursor: pointer;
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
-            z-index: 10;
-        }
-
-        @keyframes rainbowMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         /* ⭐ Minigame Button */
         #miniGameBtn {
             position: fixed;
@@ -133,17 +107,21 @@
 
         /* ⭐ Fullscreen Minigame Menu */
         #gameMode {
-            display: none; /* IMPORTANT: stays hidden on load */
+            display: none;
             position: fixed;
             inset: 0;
             background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, purple);
             background-size: 400% 400%;
             animation: rainbowMove 6s linear infinite;
             z-index: 9998;
-
-            /* Removed the second display:flex that broke everything */
             justify-content: center;
             align-items: center;
+        }
+
+        @keyframes rainbowMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* Minigame Menu Box */
@@ -174,31 +152,88 @@
         .minigameBtn:hover {
             background: #9b33ff;
         }
+
+        /* 🎮 Yarn Clicker Page */
+        #yarnClickerPage {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #111;
+            color: white;
+            text-align: center;
+            padding-top: 40px;
+            z-index: 99999;
+        }
+
+        #clickCounter {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        #bigYarn {
+            font-size: 150px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+
+        #bigYarn:active {
+            transform: scale(0.9);
+        }
+
+        #upgradeShop {
+            margin-top: 40px;
+        }
+
+        #upgradeShop button {
+            display: block;
+            margin: 10px auto;
+            padding: 12px 20px;
+            background: #7a00ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #upgradeShop button:hover {
+            background: #9b33ff;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Minigame Menu -->
+    <!-- Minigame Button -->
     <button id="miniGameBtn">PLAY MINIGAMES</button>
 
+    <!-- Minigame Menu -->
     <div id="gameMode">
         <div id="menuBox">
             <div class="menuTitle">🎮 Choose a Minigame</div>
 
-            <button class="minigameBtn" onclick="alert('Rainbow Dodge coming soon!')">
-                Rainbow Dodge
-            </button>
-
-            <button class="minigameBtn" onclick="alert('Yarn Clicker coming soon!')">
-                Yarn Clicker
-            </button>
-
-            <button class="minigameBtn" onclick="alert('Blocky Escape coming soon!')">
-                Blocky Escape
+            <button class="minigameBtn" onclick="openYarnClicker()">
+                🧶 Yarn Clicker
             </button>
 
             <p style="margin-top:20px; color:#ccc;">Press ESC to exit</p>
+        </div>
+    </div>
+
+    <!-- Yarn Clicker Game -->
+    <div id="yarnClickerPage">
+        <div id="clickCounter">Clicks: 0</div>
+
+        <div id="bigYarn">🧶</div>
+
+        <div id="upgradeShop">
+            <h2>Upgrades</h2>
+            <button onclick="buyUpgrade(0)">+1 per click (Cost: 20)</button>
+            <button onclick="buyUpgrade(1)">+5 per click (Cost: 100)</button>
+            <button onclick="buyUpgrade(2)">Auto‑Clicker (Cost: 250)</button>
+            <button onclick="buyUpgrade(3)">Double Clicks (Cost: 500)</button>
+            <button onclick="buyUpgrade(4)">Mega Yarn (Cost: 2000)</button>
         </div>
     </div>
 
@@ -225,7 +260,7 @@
 
     <div class="bouncy-yarn" id="yarnEmoji">🧶</div>
 
-    <button id="monsterBlastBtn" onclick="window.location.href='https://www.roblox.com/games/7313347582/MONSTER-BLAST'">
+    <button id="monsterBlastBtn" style="display:none;" onclick="window.location.href='https://www.roblox.com/games/7313347582/MONSTER-BLAST'">
         MONSTER BLAST
     </button>
 
@@ -272,10 +307,51 @@
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") {
                 gameMode.style.display = "none";
+                document.getElementById("yarnClickerPage").style.display = "none";
             }
         });
+
+        /* 🎮 Yarn Clicker Logic */
+        function openYarnClicker() {
+            gameMode.style.display = "none";
+            document.getElementById("yarnClickerPage").style.display = "block";
+        }
+
+        let clicks = 0;
+        let clickPower = 1;
+        let autoClick = false;
+
+        const upgradeCosts = [20, 100, 250, 500, 2000];
+
+        document.getElementById("bigYarn").onclick = () => {
+            clicks += clickPower;
+            updateCounter();
+        };
+
+        function updateCounter() {
+            document.getElementById("clickCounter").innerText = "Clicks: " + clicks;
+        }
+
+        function buyUpgrade(id) {
+            if (clicks < upgradeCosts[id]) return;
+
+            clicks -= upgradeCosts[id];
+
+            if (id === 0) clickPower += 1;
+            if (id === 1) clickPower += 5;
+            if (id === 2 && !autoClick) {
+                autoClick = true;
+                setInterval(() => {
+                    clicks += 1;
+                    updateCounter();
+                }, 1000);
+            }
+            if (id === 3) clickPower *= 2;
+            if (id === 4) clickPower += 50;
+
+            updateCounter();
+        }
     </script>
 
 </body>
 </html>
-
