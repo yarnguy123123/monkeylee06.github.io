@@ -470,34 +470,39 @@
 
         // 🔌 Real AI hook with safe fallback
         async function callYarnAI(message) {
-            // 1) Try real backend (replace URL with your Vercel/Netlify endpoint)
-            const backendUrl = "https://your-backend-url-here/api/yarn-ai"; // <-- change this later
+    const msg = message.toLowerCase();
 
-            try {
-                const response = await fetch(backendUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message })
-                });
+    // Greeting detection
+    const greetings = ["hi", "hello", "hey", "yo", "sup", "hiya", "heya"];
+    if (greetings.some(g => msg.startsWith(g))) {
+        return "Hello! How are you? Anything on your mind today?";
+    }
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data && data.reply) return data.reply;
-                }
-                throw new Error("Bad response");
-            } catch (err) {
-                // 2) Fallback: smart-feeling local demo replies
-                const replies = [
-                    "That’s actually a really cool idea. Want to turn it into a minigame?",
-                    "I can help you plan mechanics, chaos, or UI for your games.",
-                    "Imagine this as a Yarn event with flashing colors and a timer.",
-                    "You can ask me about your games, website ideas, or anything else.",
-                    "Let’s build something cursed and fun. What’s next in your head?"
-                ];
-                const pick = replies[Math.floor(Math.random() * replies.length)];
-                return pick + " (demo reply — connect me to a real AI backend when you’re ready.)";
-            }
-        }
+    // Question detection
+    if (msg.includes("?") ||
+        msg.startsWith("who") ||
+        msg.startsWith("what") ||
+        msg.startsWith("why") ||
+        msg.startsWith("how") ||
+        msg.startsWith("when") ||
+        msg.startsWith("where")) {
+        return "I'm not fully ready to answer those kinds of questions yet, but I'm learning!";
+    }
+
+    // General fallback responses
+    const responses = [
+        "That sounds interesting! Tell me more.",
+        "Really? What made you think of that?",
+        "I'm listening — keep going.",
+        "That's cool! Want to explain it a bit more?",
+        "Nice! What else is going on?",
+        "Hmm, that's actually pretty neat. What inspired that?",
+        "I like where this is going — continue!",
+        "Oh wow, tell me more about that!"
+    ];
+
+    return responses[Math.floor(Math.random() * responses.length)];
+}
 
         async function sendAIMessage() {
             const text = yarnAIInput.value.trim();
@@ -522,3 +527,4 @@
 
 </body>
 </html>
+
