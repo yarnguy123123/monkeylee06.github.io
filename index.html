@@ -469,8 +469,13 @@
         }
 
         // 🔌 Real AI hook with safe fallback
-        async function callYarnAI(message) {
+    async function callYarnAI(message) {
     const msg = message.toLowerCase();
+
+    // Yarn detector (highest priority)
+    if (msg.includes("yarn")) {
+        return "did you say yarn? well thats actually my creator";
+    }
 
     // Greeting detection
     const greetings = ["hi", "hello", "hey", "yo", "sup", "hiya", "heya"];
@@ -503,7 +508,6 @@
 
     return responses[Math.floor(Math.random() * responses.length)];
 }
-
         async function sendAIMessage() {
             const text = yarnAIInput.value.trim();
             if (!text) return;
@@ -527,4 +531,5 @@
 
 </body>
 </html>
+
 
