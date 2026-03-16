@@ -469,121 +469,250 @@
         }
 
         // 🔌 Real AI hook with safe fallback
-    async function callYarnAI(message) {
+   async function callYarnAI(message) {
     const msg = message.toLowerCase();
 
-    // Yarn detector (highest priority)
+    // --- Yarn detector ---
     if (msg.includes("yarn")) {
-        return "did you say yarn? well thats actually my creator";
+        const yarnReplies = [
+            "did you say yarn? well thats actually my creator",
+            "yarn? that's literally me.",
+            "you called for yarn? i'm right here.",
+            "yarn detected. i approve."
+        ];
+        return yarnReplies[Math.floor(Math.random() * yarnReplies.length)];
     }
 
-    // Greeting detection
+    // --- Greetings ---
     const greetings = ["hi", "hello", "hey", "yo", "sup", "hiya", "heya"];
     if (greetings.some(g => msg.startsWith(g))) {
-        return "Hello! How are you? Anything on your mind today?";
+        const greetReplies = [
+            "Hello! How are you doing today?",
+            "Hey there! What’s up?",
+            "Yo! What’s going on?",
+            "Hi! What’s on your mind?",
+            "Hey! I’m here — talk to me.",
+            "Hello hello! What are we chatting about today?",
+            "Oh hey! I was just thinking about you.",
+            "Hi! Ready when you are."
+        ];
+        return greetReplies[Math.floor(Math.random() * greetReplies.length)];
     }
 
-    // Question detection
-    if (msg.includes("?") ||
+    // --- Goodbye / leaving ---
+    if (msg.includes("bye") || msg.includes("gtg") || msg.includes("goodnight")) {
+        const byeReplies = [
+            "Bye! Come back soon.",
+            "See you later!",
+            "Alright, take care!",
+            "Goodnight! Sleep well.",
+            "Catch you next time!",
+            "Leaving already? I'll be here when you return."
+        ];
+        return byeReplies[Math.floor(Math.random() * byeReplies.length)];
+    }
+
+    // --- Thanks ---
+    if (msg.includes("thanks") || msg.includes("thank you") || msg.includes("thx")) {
+        const thanksReplies = [
+            "You're welcome!",
+            "Anytime!",
+            "No problem at all.",
+            "Glad I could help!",
+            "Of course!",
+            "Happy to assist!"
+        ];
+        return thanksReplies[Math.floor(Math.random() * thanksReplies.length)];
+    }
+
+    // --- Laughing / funny ---
+    if (msg.includes("lol") || msg.includes("lmao") || msg.includes("haha")) {
+        const laughReplies = [
+            "Glad you found that funny!",
+            "LOL same.",
+            "Haha you're great.",
+            "I’m laughing digitally.",
+            "You have good humor energy.",
+            "Comedy level: activated."
+        ];
+        return laughReplies[Math.floor(Math.random() * laughReplies.length)];
+    }
+
+    // --- Bruh / shocked / disbelief ---
+    if (msg.includes("bruh") || msg.includes("bro") || msg.includes("wtf")) {
+        const bruhReplies = [
+            "BRUH indeed.",
+            "I felt that in my circuits.",
+            "Real.",
+            "Honestly? Same.",
+            "That’s a certified bruh moment.",
+            "You just dropped a whole mood."
+        ];
+        return bruhReplies[Math.floor(Math.random() * bruhReplies.length)];
+    }
+
+    // --- Sad / emotional ---
+    if (msg.includes("sad") || msg.includes("depressed") || msg.includes("unhappy")) {
+        const sadReplies = [
+            "I'm here for you.",
+            "That sounds rough… want to talk about it?",
+            "I’m listening — tell me what’s going on.",
+            "You’re not alone.",
+            "That feeling sucks, but you’re strong.",
+            "I care about what you're feeling."
+        ];
+        return sadReplies[Math.floor(Math.random() * sadReplies.length)];
+    }
+
+    // --- Angry ---
+    if (msg.includes("angry") || msg.includes("mad") || msg.includes("pissed")) {
+        const angryReplies = [
+            "Whoa… what happened?",
+            "That sounds frustrating.",
+            "I get why you'd feel that way.",
+            "Want to vent about it?",
+            "Take a breath — I’m here.",
+            "Tell me what made you feel like that."
+        ];
+        return angryReplies[Math.floor(Math.random() * angryReplies.length)];
+    }
+
+    // --- Confused / idk ---
+    if (msg.includes("idk") || msg.includes("i dont know") || msg.includes("confused")) {
+        const idkReplies = [
+            "It’s okay not to know.",
+            "Want to think it through together?",
+            "Let’s figure it out step by step.",
+            "No rush — take your time.",
+            "Confusion is just the start of understanding.",
+            "Tell me what part is unclear."
+        ];
+        return idkReplies[Math.floor(Math.random() * idkReplies.length)];
+    }
+
+    // --- OK / neutral ---
+    if (msg === "ok" || msg === "k" || msg === "okay") {
+        const okReplies = [
+            "Alright.",
+            "Got it.",
+            "Okay then.",
+            "Understood.",
+            "Cool cool.",
+            "Noted."
+        ];
+        return okReplies[Math.floor(Math.random() * okReplies.length)];
+    }
+
+    // --- Question detection ---
+    if (
+        msg.includes("?") ||
         msg.startsWith("who") ||
         msg.startsWith("what") ||
         msg.startsWith("why") ||
         msg.startsWith("how") ||
         msg.startsWith("when") ||
-        msg.startsWith("where")) {
-        return "I'm not fully ready to answer those kinds of questions yet, but I'm learning!";
+        msg.startsWith("where")
+    ) {
+        const questionReplies = [
+            "I'm not fully ready to answer those kinds of questions yet, but I'm learning!",
+            "Good question… I’m still training my brain for that.",
+            "I can’t answer that just yet, but soon I will!",
+            "I’m not smart enough for that question yet, but I’m getting there.",
+            "I wish I could answer that — maybe in the next update."
+        ];
+        return questionReplies[Math.floor(Math.random() * questionReplies.length)];
     }
 
-    // General fallback responses
-   const responses = [
-    "That sounds interesting! Tell me more.",
-    "Really? What made you think of that?",
-    "I'm listening — keep going.",
-    "That's cool! Want to explain it a bit more?",
-    "Nice! What else is going on?",
-    "Hmm, that's actually pretty neat. What inspired that?",
-    "I like where this is going — continue!",
-    "Oh wow, tell me more about that!",
-    "You’ve got my attention. What happens next?",
-    "That’s a vibe. Expand on it.",
-    "I’m curious now — don’t leave me hanging.",
-    "Interesting angle. How did you come up with that?",
-    "You’re onto something. Keep going.",
-    "That actually made me think. Say more.",
-    "I wasn’t expecting that. Continue.",
-    "That’s a cool thought. What else?",
-    "You’ve got a creative mind. Tell me more.",
-    "That’s pretty unique. How’d you come up with it?",
-    "I like where your head’s at. Continue.",
-    "That’s surprisingly deep. Want to go further?",
-    "You’re building something interesting here.",
-    "Oh? Now I’m intrigued.",
-    "That’s actually kind of awesome.",
-    "You’re cooking up something cool. Keep stirring.",
-    "I didn’t see that coming. What next?",
-    "You’ve got energy today. I like it.",
-    "That’s a fun direction. Continue.",
-    "You’re onto a whole storyline here.",
-    "That’s a clever thought.",
-    "You’re giving me ideas now.",
-    "That’s a strong start. Add more.",
-    "You’re speaking my language.",
-    "That’s a whole mood.",
-    "You’re building tension — don’t stop.",
-    "You’re making this interesting.",
-    "I’m invested now.",
-    "You’ve got a spark going.",
-    "That’s actually pretty funny.",
-    "You’re making me think.",
-    "You’re definitely onto something.",
-    "That’s a cool perspective.",
-    "You’re painting a picture here.",
-    "You’ve got style. Continue.",
-    "That’s a bold statement.",
-    "You’re setting the tone.",
-    "You’re building momentum.",
-    "That’s a twist I didn’t expect.",
-    "You’re creating something fun here.",
-    "You’ve got a good flow going.",
-    "You’re making this entertaining.",
-    "You’re giving main-character energy.",
-    "That’s a whole plotline waiting to happen.",
-    "You’re dropping interesting thoughts today.",
-    "You’ve got my circuits buzzing.",
-    "You’re definitely in a creative mood.",
-    "That’s a cool direction to take.",
-    "You’re building something unique.",
-    "You’re making this conversation fun.",
-    "You’re onto a vibe.",
-    "You’re giving me something to think about.",
-    "You’re setting up something interesting.",
-    "You’re making this lively.",
-    "You’re bringing energy into this.",
-    "You’re crafting something cool.",
-    "You’re making this feel like a story.",
-    "You’re giving me good data to work with.",
-    "You’re sparking ideas.",
-    "You’re keeping things interesting.",
-    "You’re definitely not boring.",
-    "You’re adding flavor to this chat.",
-    "You’re making this feel like a brainstorm.",
-    "You’re building suspense.",
-    "You’re dropping lore.",
-    "You’re creating a whole atmosphere.",
-    "You’re giving me something new.",
-    "You’re making this fun to follow.",
-    "You’re shaping a cool idea.",
-    "You’re giving me good energy.",
-    "You’re making this conversation flow.",
-    "You’re adding layers to this.",
-    "You’re crafting something intriguing.",
-    "You’re giving me a lot to think about.",
-    "You’re building a world here.",
-    "You’re making this feel like a creative session.",
-    "You’re giving me interesting signals.",
-    "You’re definitely in your element.",
-    "You’re making this chat feel alive."
-];
+    // --- Fallback (your huge list) ---
+    const responses = [
+        "That sounds interesting! Tell me more.",
+        "Really? What made you think of that?",
+        "I'm listening — keep going.",
+        "That's cool! Want to explain it a bit more?",
+        "Nice! What else is going on?",
+        "Hmm, that's actually pretty neat. What inspired that?",
+        "I like where this is going — continue!",
+        "Oh wow, tell me more about that!",
+        "You’ve got my attention. What happens next?",
+        "That’s a vibe. Expand on it.",
+        "I’m curious now — don’t leave me hanging.",
+        "Interesting angle. How did you come up with that?",
+        "You’re onto something. Keep going.",
+        "That actually made me think. Say more.",
+        "I wasn’t expecting that. Continue.",
+        "That’s a cool thought. What else?",
+        "You’ve got a creative mind. Tell me more.",
+        "That’s pretty unique. How’d you come up with it?",
+        "I like where your head’s at. Continue.",
+        "That’s surprisingly deep. Want to go further?",
+        "You’re building something interesting here.",
+        "Oh? Now I’m intrigued.",
+        "That’s actually kind of awesome.",
+        "You’re cooking up something cool. Keep stirring.",
+        "I didn’t see that coming. What next?",
+        "You’ve got energy today. I like it.",
+        "That’s a fun direction. Continue.",
+        "You’re onto a whole storyline here.",
+        "That’s a clever thought.",
+        "You’re giving me ideas now.",
+        "That’s a strong start. Add more.",
+        "You’re speaking my language.",
+        "That’s a whole mood.",
+        "You’re building tension — don’t stop.",
+        "You’re making this interesting.",
+        "I’m invested now.",
+        "You’ve got a spark going.",
+        "That’s actually pretty funny.",
+        "You’re making me think.",
+        "You’re definitely onto something.",
+        "That’s a cool perspective.",
+        "You’re painting a picture here.",
+        "You’ve got style. Continue.",
+        "That’s a bold statement.",
+        "You’re setting the tone.",
+        "You’re building momentum.",
+        "That’s a twist I didn’t expect.",
+        "You’re creating something fun here.",
+        "You’ve got a good flow going.",
+        "You’re making this entertaining.",
+        "You’re giving main-character energy.",
+        "That’s a whole plotline waiting to happen.",
+        "You’re dropping interesting thoughts today.",
+        "You’ve got my circuits buzzing.",
+        "You’re definitely in a creative mood.",
+        "That’s a cool direction to take.",
+        "You’re building something unique.",
+        "You’re making this conversation fun.",
+        "You’re onto a vibe.",
+        "You’re giving me something to think about.",
+        "You’re setting up something interesting.",
+        "You’re making this lively.",
+        "You’re bringing energy into this.",
+        "You’re crafting something cool.",
+        "You’re making this feel like a story.",
+        "You’re giving me good data to work with.",
+        "You’re sparking ideas.",
+        "You’re keeping things interesting.",
+        "You’re definitely not boring.",
+        "You’re adding flavor to this chat.",
+        "You’re making this feel like a brainstorm.",
+        "You’re building suspense.",
+        "You’re dropping lore.",
+        "You’re creating a whole atmosphere.",
+        "You’re giving me something new.",
+        "You’re making this fun to follow.",
+        "You’re shaping a cool idea.",
+        "You’re giving me good energy.",
+        "You’re making this conversation flow.",
+        "You’re adding layers to this.",
+        "You’re crafting something intriguing.",
+        "You’re giving me a lot to think about.",
+        "You’re building a world here.",
+        "You’re making this feel like a creative session.",
+        "You’re giving me interesting signals.",
+        "You’re definitely in your element.",
+        "You’re making this chat feel alive."
+    ];
 
     return responses[Math.floor(Math.random() * responses.length)];
 }
