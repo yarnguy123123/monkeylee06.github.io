@@ -1,4 +1,4 @@
-const games = {
+export const games = {
   flappyYarn: {
     running: false,
     loop: null,
