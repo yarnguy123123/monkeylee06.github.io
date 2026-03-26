@@ -1,148 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Brand Yarn • Gaming Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Brand Yarn Arcade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b0b14;
-    color: white;
-  }
-
-  /* Top bar */
-  header {
-    background: #11111d;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid #2a2a40;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .yarn-icon {
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, #ff7acb, #b3005f);
-    border-radius: 50%;
-    position: relative;
-  }
-
-  .yarn-icon::after {
-    content: "👑";
-    position: absolute;
-    top: -12px;
-    right: -10px;
-    font-size: 20px;
-  }
-
-  nav a {
-    margin-left: 20px;
-    color: #ccc;
-    text-decoration: none;
-    font-size: 15px;
-  }
-
-  nav a:hover {
-    color: white;
-  }
-
-  .discord {
-    background: #ff7acb;
-    padding: 8px 14px;
-    border-radius: 20px;
-    color: black;
-    font-weight: bold;
-    text-decoration: none;
-  }
-
-  /* Game grid */
-  .games {
-    padding: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-  }
-
-  .game-card {
-    background: #161622;
-    border: 1px solid #2a2a40;
-    border-radius: 12px;
-    padding: 15px;
-  }
-
-  .game-card h3 {
-    margin-top: 0;
-  }
-
-  iframe {
-    width: 100%;
-    height: 420px;
-    border: none;
-    border-radius: 10px;
-  }
-</style>
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<header>
-  <div class="brand">
-    <div class="yarn-icon"></div>
-    <h2>Brand Yarn</h2>
+  <!-- TOP NAVIGATION -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="yarn-icon"></div>
+      <h1>Brand Yarn Arcade</h1>
+    </div>
+
+    <nav class="nav-links">
+      <a href="#games">Games</a>
+      <a href="https://discord.gg/WcTZxEbeEB" target="_blank" class="discord-btn">🧶 Discord</a>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h2>Welcome to the Yarn Arcade</h2>
+    <p>Pixel Yarn Worlds • Neon Battles • Instant Play</p>
+  </section>
+
+  <!-- GAME GRID -->
+  <section id="games" class="game-grid">
+
+    <!-- 1. Flappy Yarn -->
+    <div class="game-card" data-game="flappyYarn">
+      <h3>Flappy Yarn</h3>
+      <p>Pixel‑style flappy game</p>
+      <button class="play-btn" data-launch="flappyYarn">Play</button>
+    </div>
+
+    <!-- 2. Yarn Platformer -->
+    <div class="game-card" data-game="yarnPlatformer">
+      <h3>Yarn Platformer</h3>
+      <p>Pixel adventure platformer</p>
+      <button class="play-btn" data-launch="yarnPlatformer">Play</button>
+    </div>
+
+    <!-- 3. Yarn Maze -->
+    <div class="game-card" data-game="yarnMaze">
+      <h3>Yarn Maze</h3>
+      <p>Escape the pixel labyrinth</p>
+      <button class="play-btn" data-launch="yarnMaze">Play</button>
+    </div>
+
+    <!-- 4. Yarn Runner -->
+    <div class="game-card" data-game="yarnRunner">
+      <h3>Yarn Runner</h3>
+      <p>Endless pixel runner</p>
+      <button class="play-btn" data-launch="yarnRunner">Play</button>
+    </div>
+
+    <!-- 5. Yarn Drift -->
+    <div class="game-card" data-game="yarnDrift">
+      <h3>Yarn Drift</h3>
+      <p>Top‑down drifting</p>
+      <button class="play-btn" data-launch="yarnDrift">Play</button>
+    </div>
+
+    <!-- 6. Yarn Breakout -->
+    <div class="game-card" data-game="yarnBreakout">
+      <h3>Yarn Breakout</h3>
+      <p>Brick breaker</p>
+      <button class="play-btn" data-launch="yarnBreakout">Play</button>
+    </div>
+
+    <!-- 7. Yarn Dodge -->
+    <div class="game-card" data-game="yarnDodge">
+      <h3>Yarn Dodge</h3>
+      <p>Avoid falling objects</p>
+      <button class="play-btn" data-launch="yarnDodge">Play</button>
+    </div>
+
+    <!-- 8. Yarn Clicker -->
+    <div class="game-card" data-game="yarnClicker">
+      <h3>Yarn Clicker</h3>
+      <p>Simple clicker game</p>
+      <button class="play-btn" data-launch="yarnClicker">Play</button>
+    </div>
+
+    <!-- 9. Yarn Jump -->
+    <div class="game-card" data-game="yarnJump">
+      <h3>Yarn Jump</h3>
+      <p>Doodle‑jump style</p>
+      <button class="play-btn" data-launch="yarnJump">Play</button>
+    </div>
+
+    <!-- 10. Yarn Shooter (Neon Style) -->
+    <div class="game-card" data-game="yarnShooter">
+      <h3>Yarn Shooter</h3>
+      <p>Neon arcade shooter</p>
+      <button class="play-btn" data-launch="yarnShooter">Play</button>
+    </div>
+
+  </section>
+
+  <!-- MODAL GAME LAUNCHER -->
+  <div id="gameModal" class="modal hidden">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h2 id="modalTitle">Game Title</h2>
+        <button id="closeModal" class="close-btn">×</button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
+      </div>
+
+    </div>
   </div>
 
-  <nav>
-    <a href="#games">Games</a>
-    <a class="discord" href="https://discord.gg/WcTZxEbeEB" target="_blank">🧶 Discord</a>
-  </nav>
-</header>
-
-<section id="games" class="games">
-
-  <!-- Game 1: 2048 -->
-  <div class="game-card">
-    <h3>2048</h3>
-    <iframe src="https://play2048.co/"></iframe>
-  </div>
-
-  <!-- Game 2: Tetris -->
-  <div class="game-card">
-    <h3>Tetris</h3>
-    <iframe src="https://tetris.com/play-tetris"></iframe>
-  </div>
-
-  <!-- Game 3: Flappy Bird -->
-  <div class="game-card">
-    <h3>Flappy Bird</h3>
-    <iframe src="https://flappybird.io/"></iframe>
-  </div>
-
-  <!-- Game 4: Snake -->
-  <div class="game-card">
-    <h3>Snake</h3>
-    <iframe src="https://playsnake.org/"></iframe>
-  </div>
-
-  <!-- Game 5: Dino Game -->
-  <div class="game-card">
-    <h3>Dino Run</h3>
-    <iframe src="https://chromedino.com/"></iframe>
-  </div>
-
-</section>
+  <!-- JS -->
+  <script src="js/launcher.js"></script>
 
 </body>
 </html>
