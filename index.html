@@ -1,743 +1,1449 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>YARN</title>
-    <style>
-        /* 🌈 Full‑page rainbow outline */
-        body {
-            background-color: #111;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-            border-radius: 14px;
-            border: 4px solid transparent;
-            background-clip: padding-box;
-            animation: rainbowOutline 6s linear infinite;
-        }
+  <meta charset="UTF-8" />
+  <title>Brand Yarn Gaming</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050510;
+      --bg-alt: #0b0b1a;
+      --accent: #ff4fa3;
+      --accent-soft: #ffb3d5;
+      --text: #f5f5ff;
+      --muted: #9a9ac0;
+      --card-bg: #141428;
+      --card-border: #26264a;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+    }
 
-        @keyframes rainbowOutline {
-            0%   { box-shadow: 0 0 12px 3px #ff00ff; }
-            20%  { box-shadow: 0 0 12px 3px #ff0066; }
-            40%  { box-shadow: 0 0 12px 3px #00ffff; }
-            60%  { box-shadow: 0 0 12px 3px #00ff00; }
-            80%  { box-shadow: 0 0 12px 3px #ff9900; }
-            100% { box-shadow: 0 0 12px 3px #ff00ff; }
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        h1 {
-            margin-top: 40px;
-            font-size: 60px;
-        }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #18183a 0, #050510 55%, #020208 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        /* 💜 Buttons */
-        .button {
-            background-color: #7a00ff;
-            color: white;
-            padding: 15px 30px;
-            margin: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: 0.2s;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .button:hover {
-            background-color: #9b33ff;
-        }
+    /* Top navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(5, 5, 16, 0.96), rgba(5, 5, 16, 0.7));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
 
-        .spark {
-            position: absolute;
-            width: 120%;
-            height: 120%;
-            background: rgba(255,255,255,0.6);
-            top: -10%;
-            left: -120%;
-            transform: skewX(-20deg);
-            filter: blur(10px);
-            transition: 0.4s;
-        }
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
 
-        .button:active .spark {
-            left: 120%;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        footer {
-            margin-top: 50px;
-            color: #888;
-        }
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffe6f3 0, #ff4fa3 40%, #b3005f 100%);
+      box-shadow: 0 0 0 3px rgba(255, 79, 163, 0.35), 0 12px 30px rgba(0, 0, 0, 0.7);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        /* ⭐ Minigame Button */
-        #miniGameBtn {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            background: #00ccff;
-            color: black;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            z-index: 9999;
-            box-shadow: 0 0 10px #00ccff;
-        }
+    .brand-icon::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.7);
+      opacity: 0.9;
+    }
 
-        /* ⭐ Fullscreen Minigame Menu */
-        #gameMode {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, purple);
-            background-size: 400% 400%;
-            animation: rainbowMove 6s linear infinite;
-            z-index: 9998;
-            justify-content: center;
-            align-items: center;
-        }
+    .brand-icon::after {
+      content: "";
+      position: absolute;
+      width: 26px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-top-color: transparent;
+      border-left-color: transparent;
+      transform: rotate(-25deg);
+      opacity: 0.9;
+    }
 
-        @keyframes rainbowMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    .brand-crown {
+      position: absolute;
+      top: -10px;
+      right: -6px;
+      width: 20px;
+      height: 16px;
+      background: linear-gradient(135deg, #ffd86b, #ffb300);
+      border-radius: 4px 4px 10px 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      clip-path: polygon(0 100%, 0 40%, 20% 0, 40% 40%, 60% 0, 80% 40%, 100% 0, 100% 100%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
 
-        /* Minigame Menu Box */
-        #menuBox {
-            background: rgba(0,0,0,0.6);
-            padding: 30px 50px;
-            border-radius: 20px;
-            box-shadow: 0 0 20px white;
-            text-align: center;
-        }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
 
-        .menuTitle {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
+    .brand-name {
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-        .minigameBtn {
-            background: #7a00ff;
-            color: white;
-            padding: 15px 30px;
-            margin: 10px;
-            border-radius: 10px;
-            font-size: 22px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    .brand-name span {
+      background: linear-gradient(120deg, #ffffff, #ffe6f3, #ffb3d5);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
 
-        .minigameBtn:hover {
-            background: #9b33ff;
-        }
+    .brand-tagline {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
 
-        /* 🎮 Yarn Clicker Page */
-        #yarnClickerPage {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: #111;
-            color: white;
-            text-align: center;
-            padding-top: 40px;
-            z-index: 99999;
-        }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        #clickCounter {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
 
-        #bigYarn {
-            font-size: 150px;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s;
-        }
+    .nav-links a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+    }
 
-        #bigYarn:active {
-            transform: scale(0.9);
-        }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
 
-        #upgradeShop {
-            margin-top: 40px;
-        }
+    .discord-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: radial-gradient(circle at 0 0, #ffffff 0, #ffe6f3 18%, #ff4fa3 55%, #b3005f 100%);
+      color: #1b0010;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(255, 79, 163, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
 
-        #upgradeShop button {
-            display: block;
-            margin: 10px auto;
-            padding: 12px 20px;
-            background: #7a00ff;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 18px;
-        }
+    .discord-link:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 14px 30px rgba(255, 79, 163, 0.7);
+    }
 
-        #upgradeShop button:hover {
-            background: #9b33ff;
-        }
+    .discord-emoji {
+      font-size: 1.1rem;
+    }
 
-        /* 🔵 Yarn AI full-screen overlay */
-        #yarnAIOverlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(8px);
-            display: none;
-            flex-direction: column;
-            justify-content: flex-end;
-            z-index: 1000000;
-        }
+    /* Main layout */
+    main {
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 22px 18px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
 
-        #yarnAIChat {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
+    /* Hero section */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
 
-        #yarnAIMessages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
 
-        #yarnAIInputBar {
-            display: flex;
-            padding: 12px;
-            background: rgba(20,20,20,0.95);
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-        #yarnAIInput {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            border: none;
-            outline: none;
-            background: #111;
-            color: white;
-            font-size: 16px;
-        }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(20, 20, 40, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
 
-        #yarnAISend {
-            margin-left: 10px;
-            padding: 0 18px;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg,#00e0ff,#7b5cff);
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 18px;
-            box-shadow: 0 0 14px #00e0ff;
-        }
+    .hero-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #ff4fa3 40%, #b3005f 100%);
+      box-shadow: 0 0 12px rgba(255, 79, 163, 0.9);
+    }
 
-        /* Bubble-shaped Yarn AI button (bottom center) */
-        #yarnAIButton {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: radial-gradient(circle at 30% 30%, #7b5cff, #00e0ff);
-            padding: 16px 26px;
-            border-radius: 999px;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 0 20px #7b5cff, 0 0 30px #00e0ff;
-            z-index: 9999;
-            border: 2px solid rgba(255,255,255,0.2);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw, 2.7rem);
+      line-height: 1.1;
+      letter-spacing: 0.03em;
+    }
 
-        #yarnAIButton:hover {
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 0 26px #7b5cff, 0 0 40px #00e0ff;
-        }
+    .hero-title span {
+      background: linear-gradient(120deg, #ffffff, #ffe6f3, #ffb3d5);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
 
-        /* Chat bubbles */
-        .aiBubble, .userBubble {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            position: relative;
-            color: white;
-            background: #111;
-            animation: fadeIn 0.2s ease;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-        }
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 480px;
+    }
 
-        /* Rainbow outline */
-        .aiBubble::before, .userBubble::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: inherit;
-            padding: 2px;
-            background: conic-gradient(#7b5cff,#00e0ff,#ff4b6a,#ffd166,#7b5cff);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-        }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
 
-        /* AI left, user right */
-        .aiBubble { align-self: flex-start; }
-        .userBubble { align-self: flex-end; }
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: linear-gradient(135deg, #ff4fa3, #ffb3d5);
+      color: #1b0010;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(255, 79, 163, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .btn-primary:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(255, 79, 163, 0.9);
+    }
+
+    .btn-ghost {
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(10, 10, 26, 0.9);
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .hero-right {
+      position: relative;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, #26264a 0, #141428 40%, #050510 100%);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .hero-card-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .hero-card-badge {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: rgba(5, 5, 16, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent-soft);
+    }
+
+    .hero-card-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .hero-card-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .hero-card-preview {
+      background: radial-gradient(circle at top, #ff4fa3 0, #b3005f 40%, #050510 100%);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-preview-inner {
+      background: rgba(5, 5, 16, 0.7);
+      border-radius: 14px;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mini-yarn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mini-yarn-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffe6f3 0, #ff4fa3 40%, #b3005f 100%);
+      position: relative;
+    }
+
+    .mini-yarn-icon::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, 0.7);
+    }
+
+    .mini-yarn-icon::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-top-color: transparent;
+      border-left-color: transparent;
+      transform: rotate(-25deg);
+      top: 6px;
+      left: 4px;
+    }
+
+    .mini-yarn-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .mini-yarn-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .mini-yarn-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .mini-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.7rem;
+      color: var(--accent-soft);
+    }
+
+    .mini-stat-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hero-card-queue {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.75rem;
+    }
+
+    .queue-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .queue-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: rgba(5, 5, 16, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .queue-item-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .queue-item-name {
+      font-size: 0.8rem;
+    }
+
+    .queue-item-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .queue-item-tag {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent-soft);
+    }
+
+    .hero-card-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .hero-card-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-card-footer-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #ff4fa3 40%, #b3005f 100%);
+      box-shadow: 0 0 10px rgba(255, 79, 163, 0.9);
+    }
+
+    /* Game sections */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .section-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+    }
+
+    .filter-pill {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 10, 26, 0.9);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .filter-pill.active {
+      background: rgba(255, 79, 163, 0.16);
+      border-color: rgba(255, 79, 163, 0.7);
+      color: var(--accent-soft);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .game-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--card-border);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s;
+      cursor: pointer;
+    }
+
+    .game-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .game-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(5, 5, 16, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .game-thumb {
+      height: 120px;
+      border-radius: 10px;
+      background: radial-gradient(circle at top, #ff4fa3 0, #b3005f 40%, #050510 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-thumb::after {
+      content: "";
+      position: absolute;
+      width: 140%;
+      height: 140%;
+      background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.18) 0, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.7;
+    }
+
+    .game-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .game-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .game-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .game-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .game-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 0.75rem;
+    }
+
+    .play-btn {
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: linear-gradient(135deg, #ff4fa3, #ffb3d5);
+      color: #1b0010;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 8px 18px rgba(255, 79, 163, 0.7);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .play-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(255, 79, 163, 0.9);
+    }
+
+    .queue-btn {
+      padding: 5px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(10, 10, 26, 0.9);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.7rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .queue-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Game modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal {
+      width: min(900px, 96vw);
+      max-height: 90vh;
+      background: #050510;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: radial-gradient(circle at top, #26264a 0, #050510 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .modal-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
+    .modal-body {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 800px) {
+      .modal-body {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .modal-game-frame {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      position: relative;
+    }
+
+    .modal-game-placeholder {
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 16px;
+      background: radial-gradient(circle at top, #ff4fa3 0, #b3005f 40%, #050510 100%);
+    }
+
+    .modal-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .modal-game-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .modal-game-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meta-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.7rem;
+    }
+
+    .modal-footer {
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .modal-footer button {
+      font-size: 0.75rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 10px 18px 16px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      background: radial-gradient(circle at bottom, #18183a 0, #050510 55%, #020208 100%);
+    }
+
+    footer span {
+      color: var(--accent-soft);
+    }
+  </style>
 </head>
-
 <body>
-
-    <!-- Minigame Button -->
-    <button id="miniGameBtn">PLAY MINIGAMES</button>
-
-    <!-- Minigame Menu -->
-    <div id="gameMode">
-        <div id="menuBox">
-            <div class="menuTitle">🎮 Choose a Minigame</div>
-
-            <button class="minigameBtn" onclick="openYarnClicker()">
-                🧶 Yarn Clicker
-            </button>
-
-            <p style="margin-top:20px; color:#ccc;">Press ESC to exit</p>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="brand-icon">
+          <div class="brand-crown"></div>
         </div>
-    </div>
-
-    <!-- Yarn Clicker Game -->
-    <div id="yarnClickerPage">
-        <div id="clickCounter">Clicks: 0</div>
-
-        <div id="bigYarn">🧶</div>
-
-        <div id="upgradeShop">
-            <h2>Upgrades</h2>
-            <button onclick="buyUpgrade(0)">+1 per click (Cost: 20)</button>
-            <button onclick="buyUpgrade(1)">+5 per click (Cost: 100)</button>
-            <button onclick="buyUpgrade(2)">Auto‑Clicker (Cost: 250)</button>
-            <button onclick="buyUpgrade(3)">Double Clicks (Cost: 500)</button>
-            <button onclick="buyUpgrade(4)">Mega Yarn (Cost: 2000)</button>
+        <div class="brand-text">
+          <div class="brand-name">
+            <span>BRAND YARN</span>
+          </div>
+          <div class="brand-tagline">Arcade • Carts • Chaos</div>
         </div>
+      </div>
+
+      <div class="nav-right">
+        <nav class="nav-links">
+          <a href="#featured">Featured</a>
+          <a href="#carts">Yarn Carts</a>
+          <a href="#all-games">All Games</a>
+        </nav>
+        <a
+          class="discord-link"
+          href="https://discord.gg/WcTZxEbeEB"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="discord-emoji">🧶</span>
+          <span>Discord</span>
+        </a>
+      </div>
     </div>
+  </header>
 
-    <h1>🧶 YARN 🧶</h1>
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-pill">
+          <div class="hero-pill-dot"></div>
+          <span>Brand Yarn Arcade</span>
+        </div>
+        <h1 class="hero-title">
+          Queue up <span>Yarn Carts</span> and drop into instant mini‑games.
+        </h1>
+        <p class="hero-subtitle">
+          A cozy‑chaotic gaming hub where every cart is powered by yarn. Pick a cart, spin up a match,
+          and jump straight into the action—no loading screens, no nonsense.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" id="scrollToFeatured">
+            Play Featured Games
+            <span>▶</span>
+          </button>
+          <button class="btn-ghost" id="scrollToAll">
+            Browse All Yarn Carts
+          </button>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <div class="hero-meta-dot"></div>
+            <span>Instant launch mini‑games</span>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-dot"></div>
+            <span>Party‑ready queue system</span>
+          </div>
+          <div class="hero-meta-item">
+            <div class="hero-meta-dot"></div>
+            <span>Discord‑linked sessions</span>
+          </div>
+        </div>
+      </div>
 
-    <button class="button" onclick="shineAndGo('https://www.roblox.com/users/897945411/profile')">
-        My Profile
-        <div class="spark"></div>
-    </button>
-
-    <button class="button" onclick="shineAndGo('https://www.roblox.com/games/76938252895073/THE-ANOMALY-NIGHT')">
-        Anomaly Night
-        <div class="spark"></div>
-    </button>
-
-    <button class="button" onclick="shineAndGo('https://www.roblox.com/games/85488226664354/THE-SPEEDING-BRAINROT-WALL')">
-        Speeding Brainrot Wall
-        <div class="spark"></div>
-    </button>
-
-    <p>More coming soon</p>
-
-    <footer>© Yarn — All rights reserved.</footer>
-
-    <!-- Hidden Monster Blast button still here if you ever want to use it -->
-    <button id="monsterBlastBtn" style="display:none;" onclick="window.location.href='https://www.roblox.com/games/7313347582/MONSTER-BLAST'">
-        MONSTER BLAST
-    </button>
-
-    <!-- 🔵 FULLSCREEN YARN AI CHAT -->
-    <div id="yarnAIOverlay">
-        <div id="yarnAIChat">
-            <div id="yarnAIMessages"></div>
-
-            <div id="yarnAIInputBar">
-                <input id="yarnAIInput" type="text" placeholder="Talk to Yarn AI..." autocomplete="off">
-                <button id="yarnAISend">➤</button>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title">Now Spinning</div>
+            <div class="hero-card-badge">Yarn Cart Queue</div>
+          </div>
+          <div class="hero-card-main">
+            <div class="hero-card-preview">
+              <div class="hero-card-preview-inner">
+                <div class="mini-yarn">
+                  <div class="mini-yarn-icon"></div>
+                  <div class="mini-yarn-text">
+                    <div class="mini-yarn-name">Yarn Royale</div>
+                    <div class="mini-yarn-label">Featured Cart</div>
+                  </div>
+                </div>
+                <div class="mini-stats">
+                  <div class="mini-stat-row">
+                    <span>Players</span>
+                    <span>12 / 16</span>
+                  </div>
+                  <div class="mini-stat-row">
+                    <span>Mode</span>
+                    <span>Battle Carts</span>
+                  </div>
+                  <div class="mini-stat-row">
+                    <span>Queue</span>
+                    <span>00:23</span>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="hero-card-queue">
+              <div class="queue-title">Queue</div>
+              <div class="queue-item">
+                <div class="queue-item-main">
+                  <div class="queue-item-name">Yarn Drift Circuit</div>
+                  <div class="queue-item-meta">Arcade • 8 laps • 4 players</div>
+                </div>
+                <div class="queue-item-tag">Carts</div>
+              </div>
+              <div class="queue-item">
+                <div class="queue-item-main">
+                  <div class="queue-item-name">Threaded Tower Defense</div>
+                  <div class="queue-item-meta">Strategy • Co‑op • 3 waves</div>
+                </div>
+                <div class="queue-item-tag">Defense</div>
+              </div>
+              <div class="queue-item">
+                <div class="queue-item-main">
+                  <div class="queue-item-name">Cosmic Yarn Runner</div>
+                  <div class="queue-item-meta">Endless • Solo • Speed</div>
+                </div>
+                <div class="queue-item-tag">Runner</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card-footer">
+            <span>
+              <div class="hero-card-footer-dot"></div>
+              Auto‑matchmaking enabled
+            </span>
+            <span>Linked to 🧶 Discord lobby</span>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Featured games -->
+    <section id="featured">
+      <div class="section-header">
+        <h2 class="section-title">Featured Yarn Carts</h2>
+        <div class="section-filters">
+          <button class="filter-pill active" data-filter="all">All</button>
+          <button class="filter-pill" data-filter="carts">Carts</button>
+          <button class="filter-pill" data-filter="party">Party</button>
+          <button class="filter-pill" data-filter="solo">Solo</button>
+        </div>
+      </div>
+
+      <div class="games-grid" id="featuredGames">
+        <!-- Game 1 -->
+        <article class="game-card" data-tags="carts party">
+          <div class="game-tag">Carts</div>
+          <div class="game-thumb">Yarn Drift Circuit</div>
+          <div class="game-info">
+            <div class="game-title">Yarn Drift Circuit</div>
+            <div class="game-meta">
+              <span>🏁 8 laps</span>
+              <span>👥 2‑8 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Yarn Drift Circuit">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Yarn Drift Circuit">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Game 2 -->
+        <article class="game-card" data-tags="carts solo">
+          <div class="game-tag">Solo</div>
+          <div class="game-thumb">Cosmic Yarn Runner</div>
+          <div class="game-info">
+            <div class="game-title">Cosmic Yarn Runner</div>
+            <div class="game-meta">
+              <span>🌌 Endless</span>
+              <span>⚡ Speed</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Cosmic Yarn Runner">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Cosmic Yarn Runner">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Game 3 -->
+        <article class="game-card" data-tags="party">
+          <div class="game-tag">Party</div>
+          <div class="game-thumb">Yarn Royale</div>
+          <div class="game-info">
+            <div class="game-title">Yarn Royale</div>
+            <div class="game-meta">
+              <span>🎯 Battle</span>
+              <span>👥 4‑16 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Yarn Royale">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Yarn Royale">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Game 4 -->
+        <article class="game-card" data-tags="defense party">
+          <div class="game-tag">Defense</div>
+          <div class="game-thumb">Threaded Tower Defense</div>
+          <div class="game-info">
+            <div class="game-title">Threaded Tower Defense</div>
+            <div class="game-meta">
+              <span>🧵 3 waves</span>
+              <span>👥 Co‑op</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Threaded Tower Defense">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Threaded Tower Defense">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Yarn carts section -->
+    <section id="carts">
+      <div class="section-header">
+        <h2 class="section-title">Yarn Cart Playlists</h2>
+        <div class="section-filters">
+          <button class="filter-pill active" data-filter="all-carts">All</button>
+          <button class="filter-pill" data-filter="ranked">Ranked</button>
+          <button class="filter-pill" data-filter="casual">Casual</button>
+        </div>
+      </div>
+
+      <div class="games-grid" id="cartGames">
+        <article class="game-card" data-tags="ranked carts">
+          <div class="game-tag">Ranked</div>
+          <div class="game-thumb">Yarn League Circuit</div>
+          <div class="game-info">
+            <div class="game-title">Yarn League Circuit</div>
+            <div class="game-meta">
+              <span>🏆 Ranked</span>
+              <span>👥 4‑12 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Yarn League Circuit">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Yarn League Circuit">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card" data-tags="casual carts">
+          <div class="game-tag">Casual</div>
+          <div class="game-thumb">Cozy Yarn Cruise</div>
+          <div class="game-info">
+            <div class="game-title">Cozy Yarn Cruise</div>
+            <div class="game-meta">
+              <span>🛶 Chill</span>
+              <span>👥 1‑6 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Cozy Yarn Cruise">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Cozy Yarn Cruise">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card" data-tags="casual carts">
+          <div class="game-tag">Casual</div>
+          <div class="game-thumb">Midnight Yarn Drift</div>
+          <div class="game-info">
+            <div class="game-title">Midnight Yarn Drift</div>
+            <div class="game-meta">
+              <span>🌙 Night</span>
+              <span>👥 2‑8 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Midnight Yarn Drift">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Midnight Yarn Drift">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card" data-tags="ranked carts">
+          <div class="game-tag">Ranked</div>
+          <div class="game-thumb">Crown Cup Grand Prix</div>
+          <div class="game-info">
+            <div class="game-title">Crown Cup Grand Prix</div>
+            <div class="game-meta">
+              <span>👑 Finals</span>
+              <span>👥 8‑16 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Crown Cup Grand Prix">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Crown Cup Grand Prix">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- All games -->
+    <section id="all-games">
+      <div class="section-header">
+        <h2 class="section-title">All Yarn Games</h2>
+        <div class="section-filters">
+          <button class="filter-pill active" data-filter="all-all">All</button>
+          <button class="filter-pill" data-filter="arcade">Arcade</button>
+          <button class="filter-pill" data-filter="strategy">Strategy</button>
+          <button class="filter-pill" data-filter="experimental">Experimental</button>
+        </div>
+      </div>
+
+      <div class="games-grid" id="allGames">
+        <article class="game-card" data-tags="arcade">
+          <div class="game-tag">Arcade</div>
+          <div class="game-thumb">Neon Yarn Dash</div>
+          <div class="game-info">
+            <div class="game-title">Neon Yarn Dash</div>
+            <div class="game-meta">
+              <span>⚡ Fast</span>
+              <span>👥 1‑4 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Neon Yarn Dash">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Neon Yarn Dash">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card" data-tags="strategy">
+          <div class="game-tag">Strategy</div>
+          <div class="game-thumb">Spindle Stronghold</div>
+          <div class="game-info">
+            <div class="game-title">Spindle Stronghold</div>
+            <div class="game-meta">
+              <span>🧠 Tactics</span>
+              <span>👥 1‑3 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Spindle Stronghold">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Spindle Stronghold">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card" data-tags="experimental">
+          <div class="game-tag">Experimental</div>
+          <div class="game-thumb">Dreamcore Yarn Lab</div>
+          <div class="game-info">
+            <div class="game-title">Dreamcore Yarn Lab</div>
+            <div class="game-meta">
+              <span>🌀 Weird</span>
+              <span>👥 1‑2 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Dreamcore Yarn Lab">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Dreamcore Yarn Lab">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card" data-tags="arcade experimental">
+          <div class="game-tag">Arcade</div>
+          <div class="game-thumb">Glitch Thread Arena</div>
+          <div class="game-info">
+            <div class="game-title">Glitch Thread Arena</div>
+            <div class="game-meta">
+              <span>💥 Chaos</span>
+              <span>👥 2‑10 players</span>
+            </div>
+            <div class="game-actions">
+              <button class="play-btn" data-game="Glitch Thread Arena">
+                Play
+                <span>▶</span>
+              </button>
+              <button class="queue-btn" data-queue="Glitch Thread Arena">
+                + Queue
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Game modal -->
+  <div class="modal-backdrop" id="gameModalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Yarn Cart Session</div>
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-game-frame">
+          <!-- Replace this with an actual <iframe> to your game if you have one -->
+          <div class="modal-game-placeholder" id="modalGamePlaceholder">
+            Loading <strong id="modalGameName">Game</strong>…<br /><br />
+            This is a placeholder. Embed your real game here using an iframe or canvas.
+          </div>
+        </div>
+        <aside class="modal-sidebar">
+          <div class="modal-game-title" id="modalGameTitle">Game Title</div>
+          <p>
+            This is a demo description for the selected Yarn Cart. You can customize this text per game
+            and even pull live data from your backend later.
+          </p>
+          <div class="modal-game-meta">
+            <div class="meta-pill">🧶 Brand Yarn</div>
+            <div class="meta-pill">Instant Launch</div>
+            <div class="meta-pill">Discord Linked</div>
+          </div>
+          <p>
+            Want to play with friends? Join the Discord lobby and share your cart code:
+            <br />
+            <strong>#yarn‑carts</strong> in
+            <a href="https://discord.gg/WcTZxEbeEB" target="_blank" rel="noopener noreferrer">
+              🧶 Brand Yarn Discord
+            </a>.
+          </p>
+        </aside>
+      </div>
+      <div class="modal-footer">
+        <span>Tip: Replace this modal with your actual game launcher or Roblox/HTML embed.</span>
+        <div>
+          <button class="btn-ghost" id="modalDiscordBtn">
+            Open Discord Lobby
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Bubble-shaped Yarn AI button (replaces bouncing yarn) -->
-    <div id="yarnAIButton">Yarn AI</div>
+  <footer>
+    <div>
+      <span>Brand Yarn</span> • Yarn Carts Gaming Hub • Prototype front‑end. Plug in your real games and backend.
+    </div>
+  </footer>
 
-    <script>
-        function shineAndGo(url) {
-            setTimeout(() => window.location.href = url, 300);
-        }
+  <script>
+    // Smooth scroll buttons
+    document.getElementById("scrollToFeatured").addEventListener("click", () => {
+      document.getElementById("featured").scrollIntoView({ behavior: "smooth" });
+    });
 
-        /* ⭐ Minigame Menu Logic */
-        const gameMode = document.getElementById("gameMode");
-        const miniBtn = document.getElementById("miniGameBtn");
+    document.getElementById("scrollToAll").addEventListener("click", () => {
+      document.getElementById("all-games").scrollIntoView({ behavior: "smooth" });
+    });
 
-        miniBtn.onclick = () => {
-            gameMode.style.display = "flex";
-        };
+    // Simple filter logic for each section
+    function setupFilters(sectionId, gridId, allKey) {
+      const section = document.getElementById(sectionId);
+      const grid = document.getElementById(gridId);
+      const pills = section.querySelectorAll(".filter-pill");
+      const cards = grid.querySelectorAll(".game-card");
 
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                gameMode.style.display = "none";
-                document.getElementById("yarnClickerPage").style.display = "none";
-                // Also close AI overlay on ESC
-                document.getElementById("yarnAIOverlay").style.display = "none";
+      pills.forEach((pill) => {
+        pill.addEventListener("click", () => {
+          pills.forEach((p) => p.classList.remove("active"));
+          pill.classList.add("active");
+
+          const filter = pill.getAttribute("data-filter");
+          cards.forEach((card) => {
+            const tags = card.getAttribute("data-tags") || "";
+            if (filter === allKey || filter === "all") {
+              card.style.display = "";
+            } else {
+              card.style.display = tags.includes(filter) ? "" : "none";
             }
+          });
         });
-
-        /* 🎮 Yarn Clicker Logic */
-        function openYarnClicker() {
-            gameMode.style.display = "none";
-            document.getElementById("yarnClickerPage").style.display = "block";
-        }
-
-        let clicks = 0;
-        let clickPower = 1;
-        let autoClick = false;
-
-        const upgradeCosts = [20, 100, 250, 500, 2000];
-
-        document.getElementById("bigYarn").onclick = () => {
-            clicks += clickPower;
-            updateCounter();
-        };
-
-        function updateCounter() {
-            document.getElementById("clickCounter").innerText = "Clicks: " + clicks;
-        }
-
-        function buyUpgrade(id) {
-            if (clicks < upgradeCosts[id]) return;
-
-            clicks -= upgradeCosts[id];
-
-            if (id === 0) clickPower += 1;
-            if (id === 1) clickPower += 5;
-            if (id === 2 && !autoClick) {
-                autoClick = true;
-                setInterval(() => {
-                    clicks += 1;
-                    updateCounter();
-                }, 1000);
-            }
-            if (id === 3) clickPower *= 2;
-            if (id === 4) clickPower += 50;
-
-            updateCounter();
-        }
-
-        /* 🔵 Yarn AI full-screen chat logic */
-
-        const yarnAIButton = document.getElementById("yarnAIButton");
-        const yarnAIOverlay = document.getElementById("yarnAIOverlay");
-        const yarnAIMessages = document.getElementById("yarnAIMessages");
-        const yarnAIInput = document.getElementById("yarnAIInput");
-        const yarnAISend = document.getElementById("yarnAISend");
-
-        yarnAIButton.onclick = () => {
-            yarnAIOverlay.style.display = "flex";
-            yarnAIInput.focus();
-
-            // First-time greeting
-            if (!yarnAIMessages.hasChildNodes()) {
-                addBubble(
-                    "Hey, I’m Yarn AI. Type anything and I’ll respond. When you connect me to a real backend, I’ll get even smarter.",
-                    "ai"
-                );
-            }
-        };
-
-        function addBubble(text, type) {
-            const bubble = document.createElement("div");
-            bubble.className = type === "user" ? "userBubble" : "aiBubble";
-            bubble.textContent = text;
-            yarnAIMessages.appendChild(bubble);
-            yarnAIMessages.scrollTop = yarnAIMessages.scrollHeight;
-        }
-
-        // 🔌 Real AI hook with safe fallback
-   async function callYarnAI(message) {
-    const msg = message.toLowerCase();
-
-    // --- Yarn detector ---
-    if (msg.includes("yarn")) {
-        const yarnReplies = [
-            "did you say yarn? well thats actually my creator",
-            "yarn? that's literally me.",
-            "you called for yarn? i'm right here.",
-            "yarn detected. i approve."
-        ];
-        return yarnReplies[Math.floor(Math.random() * yarnReplies.length)];
+      });
     }
 
-    // --- Greetings ---
-    const greetings = ["hi", "hello", "hey", "yo", "sup", "hiya", "heya"];
-    if (greetings.some(g => msg.startsWith(g))) {
-        const greetReplies = [
-            "Hello! How are you doing today?",
-            "Hey there! What’s up?",
-            "Yo! What’s going on?",
-            "Hi! What’s on your mind?",
-            "Hey! I’m here — talk to me.",
-            "Hello hello! What are we chatting about today?",
-            "Oh hey! I was just thinking about you.",
-            "Hi! Ready when you are."
-        ];
-        return greetReplies[Math.floor(Math.random() * greetReplies.length)];
+    setupFilters("featured", "featuredGames", "all");
+    setupFilters("carts", "cartGames", "all-carts");
+    setupFilters("all-games", "allGames", "all-all");
+
+    // Modal logic
+    const modalBackdrop = document.getElementById("gameModalBackdrop");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalGameName = document.getElementById("modalGameName");
+    const modalGameTitle = document.getElementById("modalGameTitle");
+    const modalDiscordBtn = document.getElementById("modalDiscordBtn");
+
+    function openGameModal(gameName) {
+      modalGameName.textContent = gameName;
+      modalGameTitle.textContent = gameName;
+      modalBackdrop.style.display = "flex";
     }
 
-    // --- Goodbye / leaving ---
-    if (msg.includes("bye") || msg.includes("gtg") || msg.includes("goodnight")) {
-        const byeReplies = [
-            "Bye! Come back soon.",
-            "See you later!",
-            "Alright, take care!",
-            "Goodnight! Sleep well.",
-            "Catch you next time!",
-            "Leaving already? I'll be here when you return."
-        ];
-        return byeReplies[Math.floor(Math.random() * byeReplies.length)];
+    function closeGameModal() {
+      modalBackdrop.style.display = "none";
     }
 
-    // --- Thanks ---
-    if (msg.includes("thanks") || msg.includes("thank you") || msg.includes("thx")) {
-        const thanksReplies = [
-            "You're welcome!",
-            "Anytime!",
-            "No problem at all.",
-            "Glad I could help!",
-            "Of course!",
-            "Happy to assist!"
-        ];
-        return thanksReplies[Math.floor(Math.random() * thanksReplies.length)];
-    }
+    document.querySelectorAll(".play-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const gameName = btn.getAttribute("data-game") || "Yarn Cart";
+        openGameModal(gameName);
+      });
+    });
 
-    // --- Laughing / funny ---
-    if (msg.includes("lol") || msg.includes("lmao") || msg.includes("haha")) {
-        const laughReplies = [
-            "Glad you found that funny!",
-            "LOL same.",
-            "Haha you're great.",
-            "I’m laughing digitally.",
-            "You have good humor energy.",
-            "Comedy level: activated."
-        ];
-        return laughReplies[Math.floor(Math.random() * laughReplies.length)];
-    }
+    modalCloseBtn.addEventListener("click", closeGameModal);
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) closeGameModal();
+    });
 
-    // --- Bruh / shocked / disbelief ---
-    if (msg.includes("bruh") || msg.includes("bro") || msg.includes("wtf")) {
-        const bruhReplies = [
-            "BRUH indeed.",
-            "I felt that in my circuits.",
-            "Real.",
-            "Honestly? Same.",
-            "That’s a certified bruh moment.",
-            "You just dropped a whole mood."
-        ];
-        return bruhReplies[Math.floor(Math.random() * bruhReplies.length)];
-    }
+    // Queue buttons (demo only)
+    document.querySelectorAll(".queue-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const gameName = btn.getAttribute("data-queue") || "Yarn Cart";
+        alert("Queued: " + gameName + " (demo only – hook this into your real queue system).");
+      });
+    });
 
-    // --- Sad / emotional ---
-    if (msg.includes("sad") || msg.includes("depressed") || msg.includes("unhappy")) {
-        const sadReplies = [
-            "I'm here for you.",
-            "That sounds rough… want to talk about it?",
-            "I’m listening — tell me what’s going on.",
-            "You’re not alone.",
-            "That feeling sucks, but you’re strong.",
-            "I care about what you're feeling."
-        ];
-        return sadReplies[Math.floor(Math.random() * sadReplies.length)];
-    }
-
-    // --- Angry ---
-    if (msg.includes("angry") || msg.includes("mad") || msg.includes("pissed")) {
-        const angryReplies = [
-            "Whoa… what happened?",
-            "That sounds frustrating.",
-            "I get why you'd feel that way.",
-            "Want to vent about it?",
-            "Take a breath — I’m here.",
-            "Tell me what made you feel like that."
-        ];
-        return angryReplies[Math.floor(Math.random() * angryReplies.length)];
-    }
-
-    // --- Confused / idk ---
-    if (msg.includes("idk") || msg.includes("i dont know") || msg.includes("confused")) {
-        const idkReplies = [
-            "It’s okay not to know.",
-            "Want to think it through together?",
-            "Let’s figure it out step by step.",
-            "No rush — take your time.",
-            "Confusion is just the start of understanding.",
-            "Tell me what part is unclear."
-        ];
-        return idkReplies[Math.floor(Math.random() * idkReplies.length)];
-    }
-
-    // --- OK / neutral ---
-    if (msg === "ok" || msg === "k" || msg === "okay") {
-        const okReplies = [
-            "Alright.",
-            "Got it.",
-            "Okay then.",
-            "Understood.",
-            "Cool cool.",
-            "Noted."
-        ];
-        return okReplies[Math.floor(Math.random() * okReplies.length)];
-    }
-
-    // --- Question detection ---
-    if (
-        msg.includes("?") ||
-        msg.startsWith("who") ||
-        msg.startsWith("what") ||
-        msg.startsWith("why") ||
-        msg.startsWith("how") ||
-        msg.startsWith("when") ||
-        msg.startsWith("where")
-    ) {
-        const questionReplies = [
-            "I'm not fully ready to answer those kinds of questions yet, but I'm learning!",
-            "Good question… I’m still training my brain for that.",
-            "I can’t answer that just yet, but soon I will!",
-            "I’m not smart enough for that question yet, but I’m getting there.",
-            "I wish I could answer that — maybe in the next update."
-        ];
-        return questionReplies[Math.floor(Math.random() * questionReplies.length)];
-    }
-
-    // --- Fallback (your huge list) ---
-    const responses = [
-        "That sounds interesting! Tell me more.",
-        "Really? What made you think of that?",
-        "I'm listening — keep going.",
-        "That's cool! Want to explain it a bit more?",
-        "Nice! What else is going on?",
-        "Hmm, that's actually pretty neat. What inspired that?",
-        "I like where this is going — continue!",
-        "Oh wow, tell me more about that!",
-        "You’ve got my attention. What happens next?",
-        "That’s a vibe. Expand on it.",
-        "I’m curious now — don’t leave me hanging.",
-        "Interesting angle. How did you come up with that?",
-        "You’re onto something. Keep going.",
-        "That actually made me think. Say more.",
-        "I wasn’t expecting that. Continue.",
-        "That’s a cool thought. What else?",
-        "You’ve got a creative mind. Tell me more.",
-        "That’s pretty unique. How’d you come up with it?",
-        "I like where your head’s at. Continue.",
-        "That’s surprisingly deep. Want to go further?",
-        "You’re building something interesting here.",
-        "Oh? Now I’m intrigued.",
-        "That’s actually kind of awesome.",
-        "You’re cooking up something cool. Keep stirring.",
-        "I didn’t see that coming. What next?",
-        "You’ve got energy today. I like it.",
-        "That’s a fun direction. Continue.",
-        "You’re onto a whole storyline here.",
-        "That’s a clever thought.",
-        "You’re giving me ideas now.",
-        "That’s a strong start. Add more.",
-        "You’re speaking my language.",
-        "That’s a whole mood.",
-        "You’re building tension — don’t stop.",
-        "You’re making this interesting.",
-        "I’m invested now.",
-        "You’ve got a spark going.",
-        "That’s actually pretty funny.",
-        "You’re making me think.",
-        "You’re definitely onto something.",
-        "That’s a cool perspective.",
-        "You’re painting a picture here.",
-        "You’ve got style. Continue.",
-        "That’s a bold statement.",
-        "You’re setting the tone.",
-        "You’re building momentum.",
-        "That’s a twist I didn’t expect.",
-        "You’re creating something fun here.",
-        "You’ve got a good flow going.",
-        "You’re making this entertaining.",
-        "You’re giving main-character energy.",
-        "That’s a whole plotline waiting to happen.",
-        "You’re dropping interesting thoughts today.",
-        "You’ve got my circuits buzzing.",
-        "You’re definitely in a creative mood.",
-        "That’s a cool direction to take.",
-        "You’re building something unique.",
-        "You’re making this conversation fun.",
-        "You’re onto a vibe.",
-        "You’re giving me something to think about.",
-        "You’re setting up something interesting.",
-        "You’re making this lively.",
-        "You’re bringing energy into this.",
-        "You’re crafting something cool.",
-        "You’re making this feel like a story.",
-        "You’re giving me good data to work with.",
-        "You’re sparking ideas.",
-        "You’re keeping things interesting.",
-        "You’re definitely not boring.",
-        "You’re adding flavor to this chat.",
-        "You’re making this feel like a brainstorm.",
-        "You’re building suspense.",
-        "You’re dropping lore.",
-        "You’re creating a whole atmosphere.",
-        "You’re giving me something new.",
-        "You’re making this fun to follow.",
-        "You’re shaping a cool idea.",
-        "You’re giving me good energy.",
-        "You’re making this conversation flow.",
-        "You’re adding layers to this.",
-        "You’re crafting something intriguing.",
-        "You’re giving me a lot to think about.",
-        "You’re building a world here.",
-        "You’re making this feel like a creative session.",
-        "You’re giving me interesting signals.",
-        "You’re definitely in your element.",
-        "You’re making this chat feel alive."
-    ];
-
-    return responses[Math.floor(Math.random() * responses.length)];
-}
-        async function sendAIMessage() {
-            const text = yarnAIInput.value.trim();
-            if (!text) return;
-
-            addBubble(text, "user");
-            yarnAIInput.value = "";
-
-            const reply = await callYarnAI(text);
-            addBubble(reply, "ai");
-        }
-
-        yarnAISend.onclick = sendAIMessage;
-
-        yarnAIInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                sendAIMessage();
-            }
-        });
-    </script>
-
+    // Discord button in modal
+    modalDiscordBtn.addEventListener("click", () => {
+      window.open("https://discord.gg/WcTZxEbeEB", "_blank", "noopener");
+    });
+  </script>
 </body>
 </html>
-
-
