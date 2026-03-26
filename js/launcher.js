@@ -1,35 +1,27 @@
-import games from './games.js';
+import * as Games from './games.js';
 
-const modal = document.getElementById('gameModal');
-const closeBtn = document.getElementById('closeModal');
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const titleEl = document.getElementById('modalTitle');
+const modal = document.getElementById("gameModal");
+const modalTitle = document.getElementById("modalTitle");
+const canvas = document.getElementById("gameCanvas");
+const closeBtn = document.getElementById("closeModal");
 
-let currentGame = null;
+document.querySelectorAll(".play-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const gameName = btn.dataset.launch;
+    const gameFunction = Games[gameName];
 
-function openGame(name, label) {
-  if (currentGame && currentGame.stop) currentGame.stop();
-
-  const game = games[name];
-  if (!game) return;
-
-  currentGame = game;
-  titleEl.textContent = label;
-  modal.classList.remove('hidden');
-  game.start(canvas, ctx);
-}
-
-document.querySelectorAll('.play-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const key = btn.getAttribute('data-launch');
-    const label = btn.parentElement.querySelector('h3').textContent;
-    openGame(key, label);
+    if (gameFunction) {
+      modal.classList.remove("hidden");
+      modalTitle.textContent = btn.previousElementSibling.textContent;
+      gameFunction(canvas);
+    } else {
+      console.error("Game not found:", gameName);
+    }
   });
 });
 
-closeBtn.addEventListener('click', () => {
-  if (currentGame && currentGame.stop) currentGame.stop();
-  modal.classList.add('hidden');
+closeBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+  const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
