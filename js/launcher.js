@@ -18,7 +18,6 @@ document.querySelectorAll(".play-btn").forEach(btn => {
       return;
     }
 
-    // Stop previous game if running
     if (currentGame && currentGame.stop) {
       currentGame.stop();
     }
@@ -28,7 +27,6 @@ document.querySelectorAll(".play-btn").forEach(btn => {
     modal.classList.remove("hidden");
     modalTitle.textContent = btn.previousElementSibling.textContent;
 
-    // Start the selected game
     game.start(canvas, ctx);
   });
 });
