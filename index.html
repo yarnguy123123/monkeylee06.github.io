@@ -1,1 +1,82 @@
-<link rel="stylesheet" href="style.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YARN Arcade</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <header class="hero">
+    <h1 class="logo">YARN</h1>
+    <h2 class="tagline">UNLIMITED GAMES HEAVEN</h2>
+    <p class="subtext">Play unlimited mini-games. No ads. No limits. Pure fun.</p>
+  </header>
+
+  <!-- GAME GRID -->
+  <section class="games-section">
+    <h2 class="section-title">TOP GAMES</h2>
+
+    <div class="game-grid">
+
+      <div class="game-card">
+        <h3>Flappy Yarn</h3>
+        <button class="play-btn" data-launch="flappyYarn">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Platformer</h3>
+        <button class="play-btn" data-launch="yarnPlatformer">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Maze</h3>
+        <button class="play-btn" data-launch="yarnMaze">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Runner</h3>
+        <button class="play-btn" data-launch="yarnRunner">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Drift</h3>
+        <button class="play-btn" data-launch="yarnDrift">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Breakout</h3>
+        <button class="play-btn" data-launch="yarnBreakout">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Dodge</h3>
+        <button class="play-btn" data-launch="yarnDodge">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Clicker</h3>
+        <button class="play-btn" data-launch="yarnClicker">Play</button>
+      </div>
+
+      <div class="game-card">
+        <h3>Jump</h3>
+        <button class="play-btn" data-launch="yarnJump">Play</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GAME MODAL -->
+  <div id="gameModal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle"></h2>
+      <canvas id="gameCanvas" width="800" height="500"></canvas>
+      <button id="closeModal" class="close-btn">Close</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/launcher.js"></script>
+</body>
+</html>
