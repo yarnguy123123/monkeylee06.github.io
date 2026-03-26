@@ -5,13 +5,11 @@
   <title>Brand Yarn Arcade</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <!-- TOP NAVIGATION -->
   <header class="topbar">
     <div class="brand">
       <div class="yarn-icon"></div>
@@ -24,80 +22,68 @@
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
   <section class="hero">
     <h2>Welcome to the Yarn Arcade</h2>
     <p>Pixel Yarn Worlds • Neon Battles • Instant Play</p>
   </section>
 
-  <!-- GAME GRID -->
   <section id="games" class="game-grid">
 
-    <!-- 1. Flappy Yarn -->
-    <div class="game-card" data-game="flappyYarn">
+    <div class="game-card">
       <h3>Flappy Yarn</h3>
       <p>Pixel‑style flappy game</p>
       <button class="play-btn" data-launch="flappyYarn">Play</button>
     </div>
 
-    <!-- 2. Yarn Platformer -->
-    <div class="game-card" data-game="yarnPlatformer">
+    <div class="game-card">
       <h3>Yarn Platformer</h3>
       <p>Pixel adventure platformer</p>
       <button class="play-btn" data-launch="yarnPlatformer">Play</button>
     </div>
 
-    <!-- 3. Yarn Maze -->
-    <div class="game-card" data-game="yarnMaze">
+    <div class="game-card">
       <h3>Yarn Maze</h3>
       <p>Escape the pixel labyrinth</p>
       <button class="play-btn" data-launch="yarnMaze">Play</button>
     </div>
 
-    <!-- 4. Yarn Runner -->
-    <div class="game-card" data-game="yarnRunner">
+    <div class="game-card">
       <h3>Yarn Runner</h3>
       <p>Endless pixel runner</p>
       <button class="play-btn" data-launch="yarnRunner">Play</button>
     </div>
 
-    <!-- 5. Yarn Drift -->
-    <div class="game-card" data-game="yarnDrift">
+    <div class="game-card">
       <h3>Yarn Drift</h3>
       <p>Top‑down drifting</p>
       <button class="play-btn" data-launch="yarnDrift">Play</button>
     </div>
 
-    <!-- 6. Yarn Breakout -->
-    <div class="game-card" data-game="yarnBreakout">
+    <div class="game-card">
       <h3>Yarn Breakout</h3>
       <p>Brick breaker</p>
       <button class="play-btn" data-launch="yarnBreakout">Play</button>
     </div>
 
-    <!-- 7. Yarn Dodge -->
-    <div class="game-card" data-game="yarnDodge">
+    <div class="game-card">
       <h3>Yarn Dodge</h3>
       <p>Avoid falling objects</p>
       <button class="play-btn" data-launch="yarnDodge">Play</button>
     </div>
 
-    <!-- 8. Yarn Clicker -->
-    <div class="game-card" data-game="yarnClicker">
+    <div class="game-card">
       <h3>Yarn Clicker</h3>
       <p>Simple clicker game</p>
       <button class="play-btn" data-launch="yarnClicker">Play</button>
     </div>
 
-    <!-- 9. Yarn Jump -->
-    <div class="game-card" data-game="yarnJump">
+    <div class="game-card">
       <h3>Yarn Jump</h3>
       <p>Doodle‑jump style</p>
       <button class="play-btn" data-launch="yarnJump">Play</button>
     </div>
 
-    <!-- 10. Yarn Shooter (Neon Style) -->
-    <div class="game-card" data-game="yarnShooter">
+    <div class="game-card">
       <h3>Yarn Shooter</h3>
       <p>Neon arcade shooter</p>
       <button class="play-btn" data-launch="yarnShooter">Play</button>
@@ -105,7 +91,6 @@
 
   </section>
 
-  <!-- MODAL GAME LAUNCHER -->
   <div id="gameModal" class="modal hidden">
     <div class="modal-content">
 
@@ -121,8 +106,1142 @@
     </div>
   </div>
 
-  <!-- JS -->
-  <script src="js/launcher.js"></script>
+  <script type="module" src="js/launcher.js"></script>
 
 </body>
 </html>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #0a0014, #050010, #000000);
+  color: #f2eaff;
+}
+
+.topbar {
+  padding: 14px 22px;
+  background: rgba(10, 0, 20, 0.85);
+  border-bottom: 1px solid rgba(255, 0, 200, 0.2);
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.yarn-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff7ae0, #b300ff);
+  box-shadow: 0 0 18px #ff00ff;
+  position: relative;
+}
+
+.yarn-icon::after {
+  content: "👑";
+  position: absolute;
+  top: -14px;
+  right: -10px;
+  font-size: 20px;
+}
+
+.nav-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #d8baff;
+  font-weight: 600;
+}
+
+.discord-btn {
+  background: linear-gradient(135deg, #ff00ff, #ff77ff);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: black !important;
+  font-weight: bold;
+  box-shadow: 0 0 12px #ff00ff;
+}
+
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.game-grid {
+  padding: 40px 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 26px;
+}
+
+.game-card {
+  background: rgba(20, 0, 40, 0.7);
+  border: 1px solid rgba(255, 0, 200, 0.2);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 0 18px rgba(255, 0, 255, 0.2);
+}
+
+.play-btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #ff00ff, #ff77ff);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 12px #ff00ff;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  width: 900px;
+  max-width: 95%;
+  background: rgba(15, 0, 30, 0.95);
+  border: 1px solid rgba(255, 0, 200, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 0 30px #ff00ff;
+}
+
+.modal-header {
+  padding: 14px 20px;
+  background: rgba(30, 0, 60, 0.8);
+  border-bottom: 1px solid rgba(255, 0, 200, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #ffbaff;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#gameCanvas {
+  background: black;
+  border: 2px solid #ff00ff;
+  box-shadow: 0 0 20px #ff00ff;
+  border-radius: 10px;
+}
+const modal = document.getElementById("gameModal");
+const closeModal = document.getElementById("closeModal");
+const modalTitle = document.getElementById("modalTitle");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let currentGame = null;
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+closeModal.addEventListener("click", () => {
+  modal.classList.add("hidden");
+  clearCanvas();
+  if (currentGame && currentGame.stop) currentGame.stop();
+  currentGame = null;
+});
+
+document.querySelectorAll(".play-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const gameName = btn.dataset.launch;
+    modalTitle.textContent = btn.parentElement.querySelector("h3").textContent;
+
+    modal.classList.remove("hidden");
+    clearCanvas();
+
+    loadGame(gameName);
+  });
+});
+
+function loadGame(gameName) {
+  if (currentGame && currentGame.stop) currentGame.stop();
+
+  import(`./games/${gameName}.js`)
+    .then(module => {
+      currentGame = module.default;
+      currentGame.start(canvas, ctx);
+    })
+    .catch(err => {
+      console.error("Game failed to load:", err);
+      ctx.fillStyle = "white";
+      ctx.font = "20px Arial";
+      ctx.fillText("Error loading game.", 20, 40);
+    });
+}
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    let x = 100;
+    let y = canvas.height / 2;
+    let velocity = 0;
+    const gravity = 0.4;
+    const jump = -7;
+
+    let pipes = [];
+    let frame = 0;
+
+    function spawnPipe() {
+      const gap = 140;
+      const top = Math.random() * (canvas.height - gap - 100) + 20;
+      pipes.push({
+        x: canvas.width,
+        top,
+        bottom: top + gap
+      });
+    }
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Yarn ball
+      ctx.fillStyle = "#ff66ff";
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Physics
+      velocity += gravity;
+      y += velocity;
+
+      // Pipes
+      pipes.forEach(pipe => {
+        pipe.x -= 3;
+
+        ctx.fillStyle = "#aa00aa";
+        ctx.fillRect(pipe.x, 0, 50, pipe.top);
+        ctx.fillRect(pipe.x, pipe.bottom, 50, canvas.height - pipe.bottom);
+      });
+
+      // Remove old pipes
+      pipes = pipes.filter(p => p.x > -60);
+
+      // Spawn pipes
+      frame++;
+      if (frame % 90 === 0) spawnPipe();
+
+      // Collision
+      pipes.forEach(pipe => {
+        if (
+          x + 15 > pipe.x &&
+          x - 15 < pipe.x + 50 &&
+          (y - 15 < pipe.top || y + 15 > pipe.bottom)
+        ) {
+          this.stop();
+        }
+      });
+
+      // Ground / ceiling
+      if (y > canvas.height || y < 0) this.stop();
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    // Jump
+    window.onkeydown = () => {
+      velocity = jump;
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    let player = {
+      x: 50,
+      y: 300,
+      w: 20,
+      h: 20,
+      vy: 0,
+      onGround: false
+    };
+
+    const gravity = 0.5;
+    const jump = -10;
+
+    const platforms = [
+      { x: 0, y: 350, w: 300, h: 20 },
+      { x: 200, y: 250, w: 200, h: 20 },
+      { x: 450, y: 320, w: 200, h: 20 }
+    ];
+
+    const keys = {};
+
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Movement
+      if (keys["ArrowRight"]) player.x += 4;
+      if (keys["ArrowLeft"]) player.x -= 4;
+
+      // Gravity
+      player.vy += gravity;
+      player.y += player.vy;
+
+      // Platforms
+      player.onGround = false;
+      platforms.forEach(p => {
+        ctx.fillStyle = "#660066";
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+
+        if (
+          player.x < p.x + p.w &&
+          player.x + player.w > p.x &&
+          player.y + player.h > p.y &&
+          player.y + player.h < p.y + p.h &&
+          player.vy > 0
+        ) {
+          player.y = p.y - player.h;
+          player.vy = 0;
+          player.onGround = true;
+        }
+      });
+
+      // Jump
+      if (keys[" "] && player.onGround) {
+        player.vy = jump;
+      }
+
+      // Player
+      ctx.fillStyle = "#ff66ff";
+      ctx.fillRect(player.x, player.y, player.w, player.h);
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const tileSize = 40;
+    const cols = Math.floor(canvas.width / tileSize);
+    const rows = Math.floor(canvas.height / tileSize);
+
+    // 1 = wall, 0 = floor
+    const maze = [];
+    for (let y = 0; y < rows; y++) {
+      maze[y] = [];
+      for (let x = 0; x < cols; x++) {
+        if (y === 0 || x === 0 || y === rows - 1 || x === cols - 1) {
+          maze[y][x] = 1;
+        } else {
+          maze[y][x] = Math.random() < 0.2 ? 1 : 0;
+        }
+      }
+    }
+
+    const player = { x: 1, y: 1 };
+    const exit = { x: cols - 2, y: rows - 2 };
+    const keys = {};
+
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    const movePlayer = () => {
+      let nx = player.x;
+      let ny = player.y;
+
+      if (keys["ArrowUp"]) ny--;
+      if (keys["ArrowDown"]) ny++;
+      if (keys["ArrowLeft"]) nx--;
+      if (keys["ArrowRight"]) nx++;
+
+      if (maze[ny] && maze[ny][nx] === 0) {
+        player.x = nx;
+        player.y = ny;
+      }
+    };
+
+    const draw = () => {
+      if (!this.running) return;
+
+      movePlayer();
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          if (maze[y][x] === 1) {
+            ctx.fillStyle = "#330033";
+            ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+          }
+        }
+      }
+
+      // Exit
+      ctx.fillStyle = "#00ff88";
+      ctx.fillRect(exit.x * tileSize + 8, exit.y * tileSize + 8, tileSize - 16, tileSize - 16);
+
+      // Player
+      ctx.fillStyle = "#ff66ff";
+      ctx.fillRect(player.x * tileSize + 10, player.y * tileSize + 10, tileSize - 20, tileSize - 20);
+
+      // Win check
+      if (player.x === exit.x && player.y === exit.y) {
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "24px Arial";
+        ctx.fillText("You escaped the Yarn Maze!", 40, 40);
+      } else {
+        this.loop = requestAnimationFrame(draw);
+      }
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const groundY = canvas.height - 60;
+
+    const player = {
+      x: 80,
+      y: groundY - 30,
+      w: 30,
+      h: 30,
+      vy: 0,
+      onGround: true
+    };
+
+    const gravity = 0.6;
+    const jump = -12;
+
+    let obstacles = [];
+    let frame = 0;
+    const keys = {};
+
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    const spawnObstacle = () => {
+      obstacles.push({
+        x: canvas.width,
+        y: groundY - 20,
+        w: 20,
+        h: 20
+      });
+    };
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Ground
+      ctx.fillStyle = "#330033";
+      ctx.fillRect(0, groundY, canvas.width, 60);
+
+      // Jump
+      if (keys[" "] && player.onGround) {
+        player.vy = jump;
+        player.onGround = false;
+      }
+
+      // Gravity
+      player.vy += gravity;
+      player.y += player.vy;
+
+      if (player.y + player.h >= groundY) {
+        player.y = groundY - player.h;
+        player.vy = 0;
+        player.onGround = true;
+      }
+
+      // Obstacles
+      frame++;
+      if (frame % 80 === 0) spawnObstacle();
+
+      obstacles.forEach(o => {
+        o.x -= 6;
+        ctx.fillStyle = "#aa00aa";
+        ctx.fillRect(o.x, o.y, o.w, o.h);
+
+        // Collision
+        if (
+          player.x < o.x + o.w &&
+          player.x + player.w > o.x &&
+          player.y < o.y + o.h &&
+          player.y + player.h > o.y
+        ) {
+          this.stop();
+        }
+      });
+
+      obstacles = obstacles.filter(o => o.x + o.w > 0);
+
+      // Player
+      ctx.fillStyle = "#ff66ff";
+      ctx.fillRect(player.x, player.y, player.w, player.h);
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const player = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      angle: 0,
+      speed: 0
+    };
+
+    const keys = {};
+
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Controls
+      if (keys["ArrowUp"]) player.speed += 0.2;
+      if (keys["ArrowDown"]) player.speed -= 0.2;
+
+      if (keys["ArrowLeft"]) player.angle -= 0.07;
+      if (keys["ArrowRight"]) player.angle += 0.07;
+
+      // Friction
+      player.speed *= 0.96;
+
+      // Movement
+      player.x += Math.cos(player.angle) * player.speed;
+      player.y += Math.sin(player.angle) * player.speed;
+
+      // Wrap around edges
+      if (player.x < 0) player.x = canvas.width;
+      if (player.x > canvas.width) player.x = 0;
+      if (player.y < 0) player.y = canvas.height;
+      if (player.y > canvas.height) player.y = 0;
+
+      // Draw Yarn Car (circle)
+      ctx.save();
+      ctx.translate(player.x, player.y);
+      ctx.rotate(player.angle);
+
+      ctx.fillStyle = "#ff66ff";
+      ctx.beginPath();
+      ctx.arc(0, 0, 18, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Headlight glow
+      ctx.fillStyle = "rgba(255, 0, 255, 0.4)";
+      ctx.fillRect(10, -6, 20, 12);
+
+      ctx.restore();
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const paddle = {
+      x: canvas.width / 2 - 40,
+      y: canvas.height - 30,
+      w: 80,
+      h: 12
+    };
+
+    const ball = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      r: 10,
+      vx: 4,
+      vy: -4
+    };
+
+    const keys = {};
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    // Bricks
+    const bricks = [];
+    const rows = 5;
+    const cols = 8;
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        bricks.push({
+          x: c * 90 + 20,
+          y: r * 30 + 20,
+          w: 80,
+          h: 20,
+          alive: true
+        });
+      }
+    }
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Paddle movement
+      if (keys["ArrowLeft"]) paddle.x -= 6;
+      if (keys["ArrowRight"]) paddle.x += 6;
+
+      paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddle.x));
+
+      // Draw paddle
+      ctx.fillStyle = "#aa00aa";
+      ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
+
+      // Move ball
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // Wall bounce
+      if (ball.x < ball.r || ball.x > canvas.width - ball.r) ball.vx *= -1;
+      if (ball.y < ball.r) ball.vy *= -1;
+
+      // Paddle bounce
+      if (
+        ball.x > paddle.x &&
+        ball.x < paddle.x + paddle.w &&
+        ball.y + ball.r > paddle.y &&
+        ball.y - ball.r < paddle.y + paddle.h
+      ) {
+        ball.vy *= -1;
+      }
+
+      // Lose condition
+      if (ball.y > canvas.height) {
+        this.stop();
+      }
+
+      // Draw ball (Yarn)
+      ctx.fillStyle = "#ff66ff";
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Draw bricks
+      bricks.forEach(b => {
+        if (!b.alive) return;
+
+        ctx.fillStyle = "#660066";
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+
+        // Collision
+        if (
+          ball.x > b.x &&
+          ball.x < b.x + b.w &&
+          ball.y - ball.r < b.y + b.h &&
+          ball.y + ball.r > b.y
+        ) {
+          b.alive = false;
+          ball.vy *= -1;
+        }
+      });
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const player = {
+      x: canvas.width / 2,
+      y: canvas.height - 60,
+      w: 30,
+      h: 30,
+      speed: 6
+    };
+
+    const keys = {};
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    let objects = [];
+    let frame = 0;
+
+    const spawnObject = () => {
+      objects.push({
+        x: Math.random() * (canvas.width - 20),
+        y: -20,
+        w: 20,
+        h: 20,
+        vy: 4 + Math.random() * 3
+      });
+    };
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Player movement
+      if (keys["ArrowLeft"]) player.x -= player.speed;
+      if (keys["ArrowRight"]) player.x += player.speed;
+
+      player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
+
+      // Draw player
+      ctx.fillStyle = "#ff66ff";
+      ctx.fillRect(player.x, player.y, player.w, player.h);
+
+      // Spawn falling objects
+      frame++;
+      if (frame % 40 === 0) spawnObject();
+
+      // Update objects
+      objects.forEach(o => {
+        o.y += o.vy;
+
+        ctx.fillStyle = "#aa00aa";
+        ctx.fillRect(o.x, o.y, o.w, o.h);
+
+        // Collision
+        if (
+          player.x < o.x + o.w &&
+          player.x + player.w > o.x &&
+          player.y < o.y + o.h &&
+          player.y + player.h > o.y
+        ) {
+          this.stop();
+        }
+      });
+
+      // Remove off‑screen
+      objects = objects.filter(o => o.y < canvas.height + 40);
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+  score: 0,
+
+  start(canvas, ctx) {
+    this.running = true;
+    this.score = 0;
+
+    const yarn = {
+      x: canvas.width / 2 - 40,
+      y: canvas.height / 2 - 40,
+      size: 80
+    };
+
+    canvas.onclick = e => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+
+      if (
+        mx > yarn.x &&
+        mx < yarn.x + yarn.size &&
+        my > yarn.y &&
+        my < yarn.y + yarn.size
+      ) {
+        this.score++;
+      }
+    };
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Yarn ball
+      ctx.fillStyle = "#ff66ff";
+      ctx.beginPath();
+      ctx.arc(
+        yarn.x + yarn.size / 2,
+        yarn.y + yarn.size / 2,
+        yarn.size / 2,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+
+      // Score
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "28px Arial";
+      ctx.fillText("Clicks: " + this.score, 20, 40);
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const player = {
+      x: canvas.width / 2,
+      y: canvas.height - 80,
+      w: 30,
+      h: 30,
+      vy: 0
+    };
+
+    const gravity = 0.3;
+    const jumpForce = -10;
+
+    // Platforms
+    const platforms = [];
+    for (let i = 0; i < 8; i++) {
+      platforms.push({
+        x: Math.random() * (canvas.width - 80),
+        y: i * 70,
+        w: 80,
+        h: 12
+      });
+    }
+
+    const keys = {};
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    const draw = () => {
+      if (!this.running) return;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Horizontal movement
+      if (keys["ArrowLeft"]) player.x -= 4;
+      if (keys["ArrowRight"]) player.x += 4;
+
+      // Wrap around
+      if (player.x < -30) player.x = canvas.width;
+      if (player.x > canvas.width) player.x = -30;
+
+      // Gravity
+      player.vy += gravity;
+      player.y += player.vy;
+
+      // Platforms
+      platforms.forEach(p => {
+        ctx.fillStyle = "#660066";
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+
+        // Collision (jump)
+        if (
+          player.x + player.w > p.x &&
+          player.x < p.x + p.w &&
+          player.y + player.h > p.y &&
+          player.y + player.h < p.y + p.h &&
+          player.vy > 0
+        ) {
+          player.vy = jumpForce;
+        }
+      });
+
+      // Scroll platforms downward
+      if (player.y < canvas.height / 2) {
+        const diff = (canvas.height / 2) - player.y;
+        player.y = canvas.height / 2;
+
+        platforms.forEach(p => {
+          p.y += diff;
+          if (p.y > canvas.height) {
+            p.y = -20;
+            p.x = Math.random() * (canvas.width - 80);
+          }
+        });
+      }
+
+      // Lose condition
+      if (player.y > canvas.height) {
+        this.stop();
+      }
+
+      // Player
+      ctx.fillStyle = "#ff66ff";
+      ctx.fillRect(player.x, player.y, player.w, player.h);
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+  }
+};
+export default {
+  running: false,
+  loop: null,
+  bullets: [],
+  enemies: [],
+
+  start(canvas, ctx) {
+    this.running = true;
+
+    const player = {
+      x: canvas.width / 2,
+      y: canvas.height - 80,
+      w: 20,
+      h: 20
+    };
+
+    const keys = {};
+    window.onkeydown = e => keys[e.key] = true;
+    window.onkeyup = e => keys[e.key] = false;
+
+    const spawnEnemy = () => {
+      this.enemies.push({
+        x: Math.random() * (canvas.width - 30),
+        y: -20,
+        w: 30,
+        h: 30,
+        vy: 2 + Math.random() * 2
+      });
+    };
+
+    const draw = () => {
+      if (!this.running) return;
+
+      // Neon background
+      ctx.fillStyle = "#050010";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Player movement
+      if (keys["ArrowLeft"]) player.x -= 5;
+      if (keys["ArrowRight"]) player.x += 5;
+
+      player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
+
+      // Shooting
+      if (keys[" "]) {
+        if (!this.shootCooldown) {
+          this.bullets.push({
+            x: player.x + player.w / 2 - 3,
+            y: player.y,
+            vy: -8
+          });
+          this.shootCooldown = 10;
+        }
+      }
+
+      if (this.shootCooldown > 0) this.shootCooldown--;
+
+      // Draw player (neon)
+      ctx.fillStyle = "#ff00ff";
+      ctx.shadowColor = "#ff00ff";
+      ctx.shadowBlur = 20;
+      ctx.fillRect(player.x, player.y, player.w, player.h);
+      ctx.shadowBlur = 0;
+
+      // Bullets
+      this.bullets.forEach(b => {
+        b.y += b.vy;
+
+        ctx.fillStyle = "#ff55ff";
+        ctx.fillRect(b.x, b.y, 6, 12);
+      });
+
+      this.bullets = this.bullets.filter(b => b.y > -20);
+
+      // Spawn enemies
+      if (!this.enemyTimer) this.enemyTimer = 0;
+      this.enemyTimer++;
+      if (this.enemyTimer % 40 === 0) spawnEnemy();
+
+      // Enemies
+      this.enemies.forEach(e => {
+        e.y += e.vy;
+
+        ctx.fillStyle = "#9900ff";
+        ctx.shadowColor = "#9900ff";
+        ctx.shadowBlur = 15;
+        ctx.fillRect(e.x, e.y, e.w, e.h);
+        ctx.shadowBlur = 0;
+
+        // Collision with player
+        if (
+          player.x < e.x + e.w &&
+          player.x + player.w > e.x &&
+          player.y < e.y + e.h &&
+          player.y + player.h > e.y
+        ) {
+          this.stop();
+        }
+      });
+
+      // Bullet → enemy collision
+      this.enemies.forEach(e => {
+        this.bullets.forEach(b => {
+          if (
+            b.x < e.x + e.w &&
+            b.x + 6 > e.x &&
+            b.y < e.y + e.h &&
+            b.y + 12 > e.y
+          ) {
+            e.dead = true;
+            b.dead = true;
+          }
+        });
+      });
+
+      this.enemies = this.enemies.filter(e => !e.dead && e.y < canvas.height + 40);
+      this.bullets = this.bullets.filter(b => !b.dead);
+
+      this.loop = requestAnimationFrame(draw);
+    };
+
+    draw();
+  },
+
+  stop() {
+    this.running = false;
+    cancelAnimationFrame(this.loop);
+    this.bullets = [];
+    this.enemies = [];
+  }
+};
+BrandYarnArcade/
+│
+├── index.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── launcher.js
+│   │
+│   └── games/
+│       ├── flappyYarn.js
+│       ├── yarnPlatformer.js
+│       ├── yarnMaze.js
+│       ├── yarnRunner.js
+│       ├── yarnDrift.js
+│       ├── yarnBreakout.js
+│       ├── yarnDodge.js
+│       ├── yarnClicker.js
+│       ├── yarnJump.js
+│       └── yarnShooter.js
+│
+└── (optional) assets/
+        └── images, icons, etc.
