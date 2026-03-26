@@ -261,7 +261,422 @@ export const games = {
     }
   },
 
-  // ⭐ Continue pasting your remaining games here (Runner, Drift, Dodge, Clicker, Jump)
-  // The structure is now correct — just paste your existing code inside each start()
+  yarnRunner: {
+    running: false,
+    loop: null,
+
+    start(canvas, ctx) {
+      this.running = true;
+
+      const groundY = canvas.height - 60;
+      const player = { x: 80, y: groundY, vy: 0, r: 18, onGround: true };
+      const gravity = 0.7;
+      const jump = -13;
+
+      let obstacles = [];
+      let frame = 0;
+
+      function spawnObstacle() {
+        obstacles.push({
+          x: canvas.width + 20,
+          y: groundY,
+          w: 30,
+          h: 40
+        });
+      }
+
+      window.onkeydown = e => {
+        if (e.key === " " && player.onGround) {
+          player.vy = jump;
+          player.onGround = false;
+        }
+      };
+
+      const loop = () => {
+        if (!this.running) return;
+
+        ctx.fillStyle = "#050015";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = "#6611aa";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(0, groundY + player.r);
+        ctx.lineTo(canvas.width, groundY + player.r);
+        ctx.stroke();
+
+        player.vy += gravity;
+        player.y += player.vy;
+
+        if (player.y >= groundY) {
+          player.y = groundY;
+          player.vy = 0;
+          player.onGround = true;
+        }
+
+        ctx.fillStyle = "#ff66ff";
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, player.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        obstacles.forEach(o => {
+          o.x -= 6;
+          ctx.fillStyle = "#ff2255";
+          ctx.fillRect(o.x, o.y - o.h, o.w, o.h);
+
+          const closestX = Math.max(o.x, Math.min(player.x, o.x + o.w));
+          const closestY = Math.max(o.y - o.h, Math.min(player.y, o.y));
+          const dx = player.x - closestX;
+          const dy = player.y - closestY;
+          if (dx * dx + dy * dy < player.r * player.r) {
+            this.stop();
+          }
+        });
+
+        obstacles = obstacles.filter(o => o.x + o.w > 0);
+
+        frame++;
+        if (frame % 70 === 0) spawnObstacle();
+
+        this.loop = requestAnimationFrame(loop);
+      };
+
+      loop();
+    },
+
+    stop() {
+      this.running = false;
+      cancelAnimationFrame(this.loop);
+    }
+  },
+
+  yarnDrift: {
+    running: false,
+    loop: null,
+    keys: {},
+
+    start(canvas, ctx) {
+      this.running = true;
+      this.keys = {};
+
+      const car = { x: canvas.width / 2, y: canvas.height - 100, angle: -Math.PI / 2, speed: 0 };
+      const maxSpeed = 6;
+      const accel = 0.2;
+      const friction = 0.05;
+      const turnSpeed = 0.06;
+
+      const keyDown = e => this.keys[e.key] = true;
+      const keyUp = e => this.keys[e.key] = false;
+      window.addEventListener('keydown', keyDown);
+      window.addEventListener('keyup', keyUp);
+
+      const loop = () => {
+        if (!this.running) {
+          window.removeEventListener('keydown', keyDown);
+          window.removeEventListener('keyup', keyUp);
+          return;
+        }
+
+        ctx.fillStyle = "#020010";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (this.keys["ArrowUp"]) car.speed += accel;
+        if (this.keys["ArrowDown"]) car.speed -= accel;
+
+        if (car.speed > maxSpeed) car.speed = maxSpeed;
+        if (car.speed < -maxSpeed / 2) car.speed = -maxSpeed / 2;
+
+        if (this.keys["ArrowLeft"]) car.angle -= turnSpeed;
+        if (this.keys["ArrowRight"]) car.angle += turnSpeed;
+
+        if (!this.keys["ArrowUp"] && !this.keys["ArrowDown"]) {
+          if (car.speed > 0) car.speed -= friction;
+          else if (car.speed < 0) car.speed += friction;
+          if (Math.abs(car.speed) < 0.05) car.speed = 0;
+        }
+
+        car.x += Math.cos(car.angle) * car.speed;
+        car.y += Math.sin(car.angle) * car.speed;
+
+        ctx.save();
+        ctx.translate(car.x, car.y);
+        ctx.rotate(car.angle);
+        ctx.fillStyle = "#ff66ff";
+        ctx.fillRect(-15, -10, 30, 20);
+        ctx.restore();
+
+        this.loop = requestAnimationFrame(loop);
+      };
+
+      loop();
+    },
+
+    stop() {
+      this.running = false;
+      cancelAnimationFrame(this.loop);
+    }
+  },
+
+  // Simple Breakout-style placeholder so the button works
+  yarnBreakout: {
+    running: false,
+    loop: null,
+    keys: {},
+
+    start(canvas, ctx) {
+      this.running = true;
+      this.keys = {};
+
+      const paddle = { w: 80, h: 15, x: canvas.width / 2 - 40, y: canvas.height - 40, speed: 6 };
+      const ball = { x: canvas.width / 2, y: canvas.height / 2, r: 8, vx: 4, vy: -4 };
+
+      const keyDown = e => this.keys[e.key] = true;
+      const keyUp = e => this.keys[e.key] = false;
+      window.addEventListener('keydown', keyDown);
+      window.addEventListener('keyup', keyUp);
+
+      const loop = () => {
+        if (!this.running) {
+          window.removeEventListener('keydown', keyDown);
+          window.removeEventListener('keyup', keyUp);
+          return;
+        }
+
+        ctx.fillStyle = "#000015";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (this.keys["ArrowLeft"]) paddle.x -= paddle.speed;
+        if (this.keys["ArrowRight"]) paddle.x += paddle.speed;
+
+        paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddle.x));
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+
+        if (ball.x - ball.r < 0 || ball.x + ball.r > canvas.width) ball.vx *= -1;
+        if (ball.y - ball.r < 0) ball.vy *= -1;
+
+        if (
+          ball.y + ball.r >= paddle.y &&
+          ball.x > paddle.x &&
+          ball.x < paddle.x + paddle.w &&
+          ball.vy > 0
+        ) {
+          ball.vy *= -1;
+        }
+
+        if (ball.y - ball.r > canvas.height) {
+          this.stop();
+        }
+
+        ctx.fillStyle = "#ff66ff";
+        ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
+
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        this.loop = requestAnimationFrame(loop);
+      };
+
+      loop();
+    },
+
+    stop() {
+      this.running = false;
+      cancelAnimationFrame(this.loop);
+    }
+  },
+
+  yarnDodge: {
+    running: false,
+    loop: null,
+    keys: {},
+
+    start(canvas, ctx) {
+      this.running = true;
+      this.keys = {};
+
+      const player = { x: canvas.width / 2, y: canvas.height - 80, r: 16, speed: 5 };
+      let hazards = [];
+      let frame = 0;
+
+      const keyDown = e => this.keys[e.key] = true;
+      const keyUp = e => this.keys[e.key] = false;
+      window.addEventListener('keydown', keyDown);
+      window.addEventListener('keyup', keyUp);
+
+      function spawnHazard() {
+        hazards.push({
+          x: Math.random() * canvas.width,
+          y: -20,
+          r: 10 + Math.random() * 10,
+          vy: 2 + Math.random() * 3
+        });
+      }
+
+      const loop = () => {
+        if (!this.running) {
+          window.removeEventListener('keydown', keyDown);
+          window.removeEventListener('keyup', keyUp);
+          return;
+        }
+
+        ctx.fillStyle = "#000015";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (this.keys["ArrowLeft"]) player.x -= player.speed;
+        if (this.keys["ArrowRight"]) player.x += player.speed;
+
+        player.x = Math.max(player.r, Math.min(canvas.width - player.r, player.x));
+
+        frame++;
+        if (frame % 30 === 0) spawnHazard();
+
+        hazards.forEach(h => {
+          h.y += h.vy;
+        });
+
+        hazards = hazards.filter(h => h.y - h.r < canvas.height + 40);
+
+        ctx.fillStyle = "#ff66ff";
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, player.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#ff2255";
+        hazards.forEach(h => {
+          ctx.beginPath();
+          ctx.arc(h.x, h.y, h.r, 0, Math.PI * 2);
+          ctx.fill();
+
+          const dx = player.x - h.x;
+          const dy = player.y - h.y;
+          if (dx * dx + dy * dy < (player.r + h.r) * (player.r + h.r)) {
+            this.stop();
+          }
+        });
+
+        this.loop = requestAnimationFrame(loop);
+      };
+
+      loop();
+    },
+
+    stop() {
+      this.running = false;
+      cancelAnimationFrame(this.loop);
+    }
+  },
+
+  yarnClicker: {
+    running: false,
+    loop: null,
+
+    start(canvas, ctx) {
+      this.running = true;
+
+      let score = 0;
+
+      const clickHandler = e => {
+        if (!this.running) return;
+        score++;
+      };
+
+      canvas.addEventListener('click', clickHandler);
+
+      const loop = () => {
+        if (!this.running) {
+          canvas.removeEventListener('click', clickHandler);
+          return;
+        }
+
+        ctx.fillStyle = "#000020";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ff66ff";
+        ctx.font = "32px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Click anywhere!", canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillText("Score: " + score, canvas.width / 2, canvas.height / 2 + 20);
+
+        this.loop = requestAnimationFrame(loop);
+      };
+
+      loop();
+    },
+
+    stop() {
+      this.running = false;
+      cancelAnimationFrame(this.loop);
+    }
+  },
+
+  yarnJump: {
+    running: false,
+    loop: null,
+    keys: {},
+
+    start(canvas, ctx) {
+      this.running = true;
+      this.keys = {};
+
+      const player = { x: canvas.width / 2, y: canvas.height - 80, vy: 0, r: 16, onGround: true };
+      const gravity = 0.7;
+      const jump = -14;
+
+      const keyDown = e => this.keys[e.key] = true;
+      const keyUp = e => this.keys[e.key] = false;
+      window.addEventListener('keydown', keyDown);
+      window.addEventListener('keyup', keyUp);
+
+      const loop = () => {
+        if (!this.running) {
+          window.removeEventListener('keydown', keyDown);
+          window.removeEventListener('keyup', keyUp);
+          return;
+        }
+
+        ctx.fillStyle = "#000020";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (this.keys[" "] && player.onGround) {
+          player.vy = jump;
+          player.onGround = false;
+        }
+
+        player.vy += gravity;
+        player.y += player.vy;
+
+        const groundY = canvas.height - 60;
+        if (player.y >= groundY) {
+          player.y = groundY;
+          player.vy = 0;
+          player.onGround = true;
+        }
+
+        ctx.fillStyle = "#ff66ff";
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, player.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "#6611aa";
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(0, groundY + player.r);
+        ctx.lineTo(canvas.width, groundY + player.r);
+        ctx.stroke();
+
+        this.loop = requestAnimationFrame(loop);
+      };
+
+      loop();
+    },
+
+    stop() {
+      this.running = false;
+      cancelAnimationFrame(this.loop);
+    }
+  }
 
 };
